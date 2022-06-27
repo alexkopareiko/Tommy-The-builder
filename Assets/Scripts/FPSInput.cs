@@ -12,20 +12,24 @@ public class FPSInput : MonoBehaviour
     public Transform forcePoint;
     public float kickForce = 10f;
     public float legLength = 2.2f;
+    public float kickCooldown = 0.9f;
+    public Button jumpButton;
+    public float jumpHeight = 1.0f;
 
     private Vector3 playerVelocity;
     [SerializeField]
     private float playerSpeed = 5.0f;
-    private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
     private CharacterController _charController;
     private Animator animator;
     private bool isOnStairs = false;
+    private bool recentAttack = false;
 
     void Start()
     {
         _charController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        jumpButton.onClick.AddListener(Jump);
     }
     void Update()
     {
@@ -33,10 +37,20 @@ public class FPSInput : MonoBehaviour
         Move();
     }
 
+    void Jump() {
+        if(_charController.isGrounded) {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 1);
+            animator.SetTrigger("jump");
+        }
+    }
+
     void Move() {
         groundedPlayer = _charController.isGrounded;
+        animator.SetBool("grounded", _charController.isGrounded);
         if (groundedPlayer && playerVelocity.y < 0 && !isOnStairs)
         {
+            animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 0);
             playerVelocity.y = 0f;
         }
 
@@ -48,12 +62,6 @@ public class FPSInput : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
-        }
-
-        // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -73,7 +81,8 @@ public class FPSInput : MonoBehaviour
     }
 
     public void Attack() {
-        StartCoroutine(AttackFunc());
+        if(!recentAttack)
+            StartCoroutine(AttackFunc());
     }
 
     private IEnumerator AttackFunc() {
@@ -82,18 +91,15 @@ public class FPSInput : MonoBehaviour
 
         RaycastHit hit;
         Ray forwardRay = new Ray(forcePoint.position, transform.forward);
-        Debug.DrawRay(forcePoint.position, transform.forward * 100, Color.green);
         if (Physics.Raycast(forwardRay, out hit))
         {
-            Debug.Log(hit.distance);
-            hit.transform.gameObject.GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-            if(hit.distance <= legLength) {
-                // hit.rigidbody.AddForceAtPosition(transform.forward * kickForce, hit.transform.position, ForceMode.Acceleration);
+            if(hit.distance <= legLength && hit.rigidbody) {
                 hit.rigidbody.AddForce(transform.forward * kickForce, ForceMode.Acceleration);
             }
         }
-
-        yield return new WaitForSeconds(0.9f);
+        recentAttack = true;
+        yield return new WaitForSeconds(kickCooldown);
         animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0);
+        recentAttack = false;
     }
 }
