@@ -12,11 +12,14 @@ public class CameraMove : MonoBehaviour
  
     [Tooltip("This value will change at the runtime depending on target movement. Initialize with zero vector.")] 
     private Vector3 velocity = Vector3.zero;
-    public Transform target;
+
+    [Tooltip("Middle point of characher or where camera need look to")]
+    private Transform target;
 
 
     private void Start()
     {
+        target = GameManager.instance.player.GetComponent<FPSInput>().lookTo;
         offset = transform.position - target.position;
     }
 

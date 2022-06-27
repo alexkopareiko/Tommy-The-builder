@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6235bac183763ee49b437d079a538297
+guid: 7837f85868b64e844a0f8fcc82a8348b
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
@@ -102,7 +102,7 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
@@ -180,7 +180,7 @@ ModelImporter:
       takeName: Armature|Jump
       internalID: 0
       firstFrame: 0
-      lastFrame: 11
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

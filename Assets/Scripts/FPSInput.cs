@@ -13,8 +13,11 @@ public class FPSInput : MonoBehaviour
     public float kickForce = 10f;
     public float legLength = 2.2f;
     public float kickCooldown = 0.9f;
+    public Transform lookTo;
     public Button jumpButton;
+    public Button kickButton;
     public float jumpHeight = 1.0f;
+    
 
     private Vector3 playerVelocity;
     [SerializeField]
@@ -30,6 +33,7 @@ public class FPSInput : MonoBehaviour
         _charController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         jumpButton.onClick.AddListener(Jump);
+        kickButton.onClick.AddListener(Attack);
     }
     void Update()
     {
