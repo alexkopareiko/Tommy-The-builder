@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 public class FPSInput : MonoBehaviour
 {
     public VariableJoystick joystick;
@@ -17,6 +18,7 @@ public class FPSInput : MonoBehaviour
     public Button jumpButton;
     public Button kickButton;
     public float jumpHeight = 1.0f;
+    public AudioClip kickClip;
     
 
     private Vector3 playerVelocity;
@@ -28,16 +30,19 @@ public class FPSInput : MonoBehaviour
     private bool isOnStairs = false;
     private bool recentAttack = false;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         _charController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
         jumpButton.onClick.AddListener(Jump);
         kickButton.onClick.AddListener(Attack);
     }
     void Update()
     {
-        SetJoystickSprite();
+        // SetJoystickSprite();
         Move();
     }
 
@@ -58,8 +63,7 @@ public class FPSInput : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        float vertical = isOnStairs ? joystick.Vertical : 0;
-        Vector3 move = new Vector3(joystick.Horizontal, vertical, 0);
+        Vector3 move = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
 
         _charController.Move(move * Time.deltaTime * playerSpeed);
 
@@ -92,13 +96,13 @@ public class FPSInput : MonoBehaviour
     private IEnumerator AttackFunc() {
         animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
         animator.SetTrigger("kick_leg_1");
-
         RaycastHit hit;
         Ray forwardRay = new Ray(forcePoint.position, transform.forward);
         if (Physics.Raycast(forwardRay, out hit))
         {
             if(hit.distance <= legLength && hit.rigidbody) {
                 hit.rigidbody.AddForce(transform.forward * kickForce, ForceMode.Acceleration);
+                audioSource.PlayOneShot(kickClip);
             }
         }
         recentAttack = true;
