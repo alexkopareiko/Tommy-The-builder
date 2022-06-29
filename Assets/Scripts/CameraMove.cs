@@ -19,8 +19,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        target = GameManager.instance.player.GetComponent<FPSInput>().lookTo;
-        offset = transform.position - target.position;
+        target = FindObjectOfType<FPSInput>().lookTo;
     }
 
     private void LateUpdate()

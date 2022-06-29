@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Photon.Pun;
+
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(AudioSource))]
@@ -29,6 +31,7 @@ public class FPSInput : MonoBehaviour
     private Animator animator;
     private bool isOnStairs = false;
     private bool recentAttack = false;
+    private PhotonView view;
 
     private AudioSource audioSource;
 
@@ -36,14 +39,21 @@ public class FPSInput : MonoBehaviour
     {
         _charController = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
+        view = GetComponent<PhotonView>();
         animator = GetComponentInChildren<Animator>();
-        jumpButton.onClick.AddListener(Jump);
-        kickButton.onClick.AddListener(Attack);
+        // jumpButton.onClick.AddListener(Jump);
+        // kickButton.onClick.AddListener(Attack);
     }
     void Update()
     {
         // SetJoystickSprite();
-        Move();
+        if(view.IsMine) {
+            Move();
+            if(Input.GetButtonDown("Fire1")) {
+                Attack();
+            }
+        }
+        
     }
 
     void Jump() {
@@ -63,7 +73,8 @@ public class FPSInput : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        // Vector3 move = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         _charController.Move(move * Time.deltaTime * playerSpeed);
 
@@ -72,9 +83,15 @@ public class FPSInput : MonoBehaviour
             gameObject.transform.forward = move;
         }
 
+        if(Input.GetButtonDown("Jump")) {
+            Jump();
+        }
+
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         _charController.Move(playerVelocity * Time.deltaTime);
-        float maxMove = Mathf.Max(Mathf.Abs(joystick.Horizontal), Mathf.Abs(joystick.Vertical));
+        // float maxMove = Mathf.Max(Mathf.Abs(joystick.Horizontal), Mathf.Abs(joystick.Vertical));
+        float maxMove = Mathf.Max(Mathf.Abs(Input.GetAxis("Horizontal")), Mathf.Abs(Input.GetAxis("Vertical")));
         animator.SetFloat("speed", maxMove);
     }
 
