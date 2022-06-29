@@ -12,6 +12,7 @@ public class FPSInput : MonoBehaviour
     public Sprite[] axisJoystickSprites;
     public Image joystickBackground;
     public bool groundedPlayer;
+    public float groundedLength = 0.05f;
     public Transform forcePoint;
     public float kickForce = 10f;
     public float legLength = 2.2f;
@@ -24,6 +25,7 @@ public class FPSInput : MonoBehaviour
     
 
     private Vector3 playerVelocity;
+
     [SerializeField]
     private float playerSpeed = 5.0f;
     private float gravityValue = -9.81f;
@@ -32,7 +34,6 @@ public class FPSInput : MonoBehaviour
     private bool isOnStairs = false;
     private bool recentAttack = false;
     private PhotonView view;
-
     private AudioSource audioSource;
 
     void Start()
@@ -52,12 +53,13 @@ public class FPSInput : MonoBehaviour
             if(Input.GetButtonDown("Fire1")) {
                 Attack();
             }
+            // IsGrounded();
         }
         
     }
 
     void Jump() {
-        if(_charController.isGrounded) {
+        if(groundedPlayer) {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 1);
             animator.SetTrigger("jump");
@@ -66,7 +68,7 @@ public class FPSInput : MonoBehaviour
 
     void Move() {
         groundedPlayer = _charController.isGrounded;
-        animator.SetBool("grounded", _charController.isGrounded);
+        animator.SetBool("grounded", groundedPlayer);
         if (groundedPlayer && playerVelocity.y < 0 && !isOnStairs)
         {
             animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 0);
@@ -87,7 +89,6 @@ public class FPSInput : MonoBehaviour
             Jump();
         }
 
-
         playerVelocity.y += gravityValue * Time.deltaTime;
         _charController.Move(playerVelocity * Time.deltaTime);
         // float maxMove = Mathf.Max(Mathf.Abs(joystick.Horizontal), Mathf.Abs(joystick.Vertical));
@@ -95,18 +96,33 @@ public class FPSInput : MonoBehaviour
         animator.SetFloat("speed", maxMove);
     }
 
-    void SetJoystickSprite() {
-        if(!isOnStairs) {
-            joystick.AxisOptions = AxisOptions.Horizontal;
-            joystickBackground.sprite = axisJoystickSprites[1];
-        } else {
-            joystick.AxisOptions = AxisOptions.Both;
-            joystickBackground.sprite = axisJoystickSprites[0];
-        }
-    }
+    // bool IsGrounded() {
+    //     groundedPlayer = false;
+    //     RaycastHit hit;
+    //     Ray forwardRay = new Ray(transform.position, -transform.up);
+    //     if (Physics.Raycast(forwardRay, out hit))
+    //     {
+    //         Debug.Log(hit.distance);
+    //         if(hit.distance <= groundedLength) {
+    //             groundedPlayer = true;
+    //         }
+    //     }
+    //     Debug.Log(groundedPlayer);
+    //     return groundedPlayer;
+    // }
+
+    // void SetJoystickSprite() {
+    //     if(!isOnStairs) {
+    //         joystick.AxisOptions = AxisOptions.Horizontal;
+    //         joystickBackground.sprite = axisJoystickSprites[1];
+    //     } else {
+    //         joystick.AxisOptions = AxisOptions.Both;
+    //         joystickBackground.sprite = axisJoystickSprites[0];
+    //     }
+    // }
 
     public void Attack() {
-        if(!recentAttack)
+        if(!recentAttack && _charController.isGrounded)
             StartCoroutine(AttackFunc());
     }
 
