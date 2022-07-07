@@ -22,13 +22,14 @@ public class FPSInput : MonoBehaviour
     public Button kickButton;
     public float jumpHeight = 1.0f;
     public AudioClip kickClip;
+    public float gravityValue = -30f;
+    public Texture2D pointer;
     
 
     private Vector3 playerVelocity;
 
     [SerializeField]
     private float playerSpeed = 5.0f;
-    private float gravityValue = -9.81f;
     private CharacterController _charController;
     private Animator animator;
     private bool isOnStairs = false;
@@ -44,17 +45,19 @@ public class FPSInput : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         // jumpButton.onClick.AddListener(Jump);
         // kickButton.onClick.AddListener(Attack);
+        // Cursor.SetCursor (pointer, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = true;
     }
     void Update()
     {
         // SetJoystickSprite();
-        if(view.IsMine) {
+        // if(view.IsMine) {
             Move();
             if(Input.GetButtonDown("Fire1")) {
                 Attack();
             }
             // IsGrounded();
-        }
+        // }
         
     }
 
