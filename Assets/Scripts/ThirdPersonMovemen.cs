@@ -6,7 +6,7 @@ using Photon.Pun;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(AudioSource))]
-public class FPSInput : MonoBehaviour
+public class ThirdPersonMovement : MonoBehaviour
 {
     public VariableJoystick joystick;
     public Sprite[] axisJoystickSprites;

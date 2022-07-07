@@ -27,7 +27,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        target = FindObjectOfType<FPSInput>().lookTo;
+        target = FindObjectOfType<ThirdPersonMovement>().lookTo;
     }
     
     private void Update() {
