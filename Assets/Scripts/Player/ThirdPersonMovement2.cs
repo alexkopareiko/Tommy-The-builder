@@ -40,13 +40,16 @@ public class ThirdPersonMovement2 : MonoBehaviour
 
     void Move() {
         groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
+        animator.SetBool("grounded", groundedPlayer);
         if(groundedPlayer && playerVelocity.y < 0) {
+            animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 0);
             playerVelocity.y = -2f;
         }
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal") * 0.5f;
         float vertical = Input.GetAxisRaw("Vertical");
+
+        vertical = vertical < 0 ? vertical * 0.5f: vertical;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if(direction.magnitude >= 0.1f) {
@@ -63,10 +66,14 @@ public class ThirdPersonMovement2 : MonoBehaviour
 
         if(groundedPlayer && Input.GetButtonDown("Jump")) {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravityValue);
+            animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 1);
+            animator.SetTrigger("jump");
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         controller.Move(playerVelocity * Time.deltaTime);
+        animator.SetFloat("vertical", vertical);
+        animator.SetFloat("horizontal", horizontal);
     }
 }
