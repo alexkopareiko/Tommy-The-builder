@@ -6,6 +6,7 @@ public class ProjectileMove : MonoBehaviour
 {
 
     public float speed;
+    public int damage;
     public float fireRate;
     public GameObject muzzlePrefab;
     public GameObject hitPrefab;
@@ -39,6 +40,9 @@ public class ProjectileMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         speed = 0;
+        if(other.gameObject.CompareTag("Player")){
+            other.gameObject.GetComponent<Player>().TakeDamage(damage);
+        }
         ContactPoint contact = other.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 pos = contact.point;
