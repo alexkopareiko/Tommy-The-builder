@@ -37,6 +37,8 @@ public class Attack : MonoBehaviour
 
     void Update()
     {
+        if(player.currentHealth <= 0) return; 
+
         notMoving = controller.velocity.magnitude == 0 && thirdPersonMovement.groundedPlayer;
         ableToAttack = Time.time >= timeToFire && !isCasting;
         animator.SetBool("able_to_attack", ableToAttack);
@@ -82,14 +84,6 @@ public class Attack : MonoBehaviour
         if(!notMoving) {
             ResetCasting();
         }
-    }
-
-    private void OnEnable() {
-        Actions.PlayerIsMoving += ResetCasting;
-    }
-
-    private void OnDisable() {
-        Actions.PlayerIsMoving -= ResetCasting;
     }
 
     void PlayerHit(Vector3 bulletDir, Vector3 myDir) {

@@ -24,17 +24,24 @@ public class ThirdPersonMovement : MonoBehaviour
     private Animator animator;
     float turnSmoothVelocity;
     private AudioSource audioSource;
+    private Player player;
 
 
     private void Start() {
         audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
-        controller = GetComponentInChildren<CharacterController>();
+        controller = GetComponent<CharacterController>();
+        player = GetComponent<Player>();
         Cursor.visible = true;
     }
 
     private void Update() {
-        Move();
+        if(player.currentHealth > 0) {
+            if(!controller.enabled) controller.enabled = true;
+            Move();
+        } else {
+            if(controller.enabled) controller.enabled = false;
+        }
     }
 
 
@@ -76,9 +83,5 @@ public class ThirdPersonMovement : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
         animator.SetFloat("vertical", vertical);
         animator.SetFloat("horizontal", horizontal);
-
-        if(controller.velocity.magnitude != 0) {
-            // Actions.PlayerIsMoving();
-        }
     }
 }

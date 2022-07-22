@@ -20,10 +20,12 @@ public class Player : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        currentHealth -= damage;
-        Debug.Log("currentHealth " + currentHealth);
-        if(currentHealth <= 0) {
-            Die();
+        if(currentHealth > 0) {
+            currentHealth -= damage;
+            Debug.Log("currentHealth " + currentHealth);
+            if(currentHealth <= 0) {
+                Die();
+            }
         }
     }
 
@@ -46,6 +48,9 @@ public class Player : MonoBehaviour
 
     void Die() {
         Debug.Log("Player died");
+        animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
+        animator.SetBool("isDead", true);
+
         // Die animation
 
         // Disable the enemy
