@@ -47,7 +47,9 @@ public class Spell : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         speed = 0;
         if(other.gameObject.CompareTag("Player")){
-            other.gameObject.GetComponent<Player>().TakeDamage(damage);
+            Player enemy = other.gameObject.GetComponent<Player>();
+            enemy.TakeDamage(damage);
+            enemy.PlayerHit(transform.forward, other.transform.forward);
         }
         ContactPoint contact = other.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);

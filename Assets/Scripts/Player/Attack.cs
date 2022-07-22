@@ -47,37 +47,41 @@ public class Attack : MonoBehaviour
             if(player.currentMana >= manaCost) {
                 isCasting = true;
                 animator.SetBool("isCasting", isCasting);
-                animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
+                animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
                 animator.SetTrigger("attack_spear");
                 currentSpell = SpearAttack(spell);
                 StartCoroutine(currentSpell);
             }
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2) && ableToAttack) {
-            animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
+            animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 1);
             animator.SetTrigger("attack_staff");
             currentSpell = StaffAttack(attackStaff.length);
             StartCoroutine(currentSpell);
         }
         // else if(Input.GetKeyDown(KeyCode.Alpha2) && Time.time >= timeToFire) {
         //     timeToFire = Time.time + 1 / vfx[0].GetComponent<Spell>().fireRate;
-        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
+        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
         //     animator.SetTrigger("attack_staff");
         //     Invoke("StaffAttack", attackStaff.length);
         // }
         // else if(Input.GetKeyDown(KeyCode.Alpha3) && Time.time >= timeToFire) {
         //     timeToFire = Time.time + 1 / vfx[1].GetComponent<Spell>().fireRate;
-        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
+        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
         //     animator.SetTrigger("attack_fireball");
         //     Invoke("FireballAttack", attackFireball.length);
         // }
         // else if(Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= timeToFire) {
         //     timeToFire = Time.time + 1 / vfx[1].GetComponent<Spell>().fireRate;
-        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1);
+        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
         //     animator.SetTrigger("attack_shield");
         //     // Invoke("SpawnVFX", attackShield.length);
         // } else {
         // }
+
+        if(!notMoving) {
+            ResetCasting();
+        }
     }
 
     private void OnEnable() {
@@ -88,13 +92,28 @@ public class Attack : MonoBehaviour
         Actions.PlayerIsMoving -= ResetCasting;
     }
 
-    void ResetCasting() {
+    void PlayerHit(Vector3 bulletDir, Vector3 myDir) {
+        Vector2 bulletVector = new Vector2(bulletDir.x, bulletDir.z);
+        Vector2 myVector = new Vector2(myDir.x, myDir.z);
+        float angle = Vector2.Angle(bulletVector, myVector);
+        animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
+        if(angle <= 90) {
+            animator.SetTrigger("get_damage_back");
+        } else{
+            animator.SetTrigger("get_damage_front");
+        }
+        ResetCasting();
+    }
+
+    public void ResetCasting() {
         if(isCasting) {
             StopCoroutine(currentSpell);
             currentSpell = null;
             isCasting = false;
             animator.SetBool("isCasting", isCasting);
-            animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0);
+            animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
+            animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 0);
+            // animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 0);
             timeToFire = 0;
         }
     }
@@ -109,7 +128,6 @@ public class Attack : MonoBehaviour
         } else {
             Debug.Log("No Fire Point");
         }
-        animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0);
     }
 
     IEnumerator StaffAttack(float castingTime) {
@@ -118,13 +136,13 @@ public class Attack : MonoBehaviour
             Collider[] hitEnemies = Physics.OverlapSphere(staffHitPoint.transform.position, staffAttackPointRadius, staffAttackLayerMask);
             foreach(Collider enemy in hitEnemies) {
                 enemy.GetComponent<Player>().TakeDamage(attackDamageStaff);
+                enemy.GetComponent<Player>().PlayerHit(transform.forward, enemy.transform.forward);
             }
             isCasting = true;
             ResetCasting();
         } else {
             Debug.Log("No Fire Point");
         }
-        animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0);
     }
 
     // void FireballAttack() {
@@ -135,7 +153,7 @@ public class Attack : MonoBehaviour
     //     } else {
     //         Debug.Log("No Fire Point"); 
     //     }
-    //     animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0);
+    //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
     // }
 
     void OnDrawGizmosSelected() {

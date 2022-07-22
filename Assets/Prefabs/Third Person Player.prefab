@@ -74,7 +74,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -82,14 +82,14 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.2411766
+        time: 0.031578947
+        value: 0.2235294
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 0.04705888
@@ -104,33 +104,33 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.18564281, b: 0, a: 0}
-      key1: {r: 1, g: 0.69612426, b: 0, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0.5686275}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0, b: 0.8913307, a: 0.5019608}
+      key1: {r: 0.051808357, g: 0, b: 1, a: 0.38039216}
+      key2: {r: 0, g: 0, b: 0, a: 0.38039216}
+      key3: {r: 0, g: 0, b: 0, a: 0.38039216}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 16191
-      ctime1: 48959
+      ctime1: 48188
       ctime2: 0
       ctime3: 0
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
-      atime1: 15035
-      atime2: 47802
-      atime3: 65535
+      atime0: 15613
+      atime1: 27756
+      atime2: 27756
+      atime3: 27756
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 4
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -484,6 +484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
+  maxMana: 100
+  currentMana: 0
 --- !u!114 &1818146398375157175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,8 +530,8 @@ MonoBehaviour:
   attackDamageStaff: 5
   staffAttackLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  staffAttackPointRadius: 0.39
+    m_Bits: 64
+  staffAttackPointRadius: 1.17
   vfx:
   - {fileID: 9186516990293965276, guid: 1e1046652a6b7b7488408ae9002760ee, type: 3}
   - {fileID: 3923959449065470854, guid: 63b687d20481ff048bb505c0eb2e4f33, type: 3}
@@ -536,6 +539,7 @@ MonoBehaviour:
   attackShield: {fileID: -6055874968627045191, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   attackSpear: {fileID: -8222820210870594992, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   attackStaff: {fileID: 6233698504422847411, guid: b585e2467dd570541844e46abf3023c6, type: 3}
+  isCasting: 0
 --- !u!1 &1818146398777431263
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,14 +646,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4320676731818774580}
-  m_LocalRotation: {x: 0.06040355, y: -0.025511023, z: -0.8906487, w: 0.44993928}
-  m_LocalPosition: {x: 0.83239716, y: 1.263863, z: -1.0703853}
-  m_LocalScale: {x: 0.047134724, y: 0.047134735, z: 0.04713472}
+  m_LocalRotation: {x: 0.004459334, y: 0, z: 0, w: 0.99999005}
+  m_LocalPosition: {x: 0.004, y: 1.248, z: 0.767}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1818146398375157169}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.511, y: 0, z: 0}
 --- !u!1001 &1809130553997311732
 PrefabInstance:
   m_ObjectHideFlags: 0

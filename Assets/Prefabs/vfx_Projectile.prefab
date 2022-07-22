@@ -5002,7 +5002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  spellName: 
+  spellName: Spear
   damage: 5
   manaCost: 10
   castingTime: 0.5
