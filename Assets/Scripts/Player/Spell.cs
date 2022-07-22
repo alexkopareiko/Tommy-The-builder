@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileMove : MonoBehaviour
+public class Spell : MonoBehaviour
 {
 
     public float speed;
+
+    public string spellName;
     public int damage;
-    public float fireRate;
+    public int manaCost;
+    public float castingTime;
+
+    [Tooltip("time after casting")]
+    public float coolDown;
     public GameObject muzzlePrefab;
     public GameObject hitPrefab;
 

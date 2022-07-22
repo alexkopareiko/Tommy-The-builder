@@ -76,5 +76,9 @@ public class ThirdPersonMovement : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
         animator.SetFloat("vertical", vertical);
         animator.SetFloat("horizontal", horizontal);
+
+        if(controller.velocity.magnitude != 0) {
+            Actions.PlayerIsMoving();
+        }
     }
 }
