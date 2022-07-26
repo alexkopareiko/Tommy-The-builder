@@ -2,27 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
-    #region Singleton
-    public static GameManager instance;
-    private void Awake()
+namespace Com.NikfortGames.MyGame {
+    public class GameManager : MonoBehaviour
     {
-        instance = this;
-    }
-    #endregion
 
-    private Player player;
+        #region Public Fields
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = FindObjectOfType<Player>();
-    }
+        public static GameManager instance;
 
-    // Update is called once per frame
-    void Update()
-    {
+        #endregion
+        
+        #region Private Fields
+        private Player player;
+        
+        #endregion
+
+        #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            instance = this;
+        }
+
+        void Start()
+        {
+            player = FindObjectOfType<Player>();
+        }
+
+        #endregion
         
     }
 }
+

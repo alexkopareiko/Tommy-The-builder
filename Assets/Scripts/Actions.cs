@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public static class Actions
-{
+namespace Com.NikfortGames.MyGame {
+    public static class Actions
+    {
+    }
 }
+
+

@@ -3,17 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpawnPlayers : MonoBehaviour
-{
-    public GameObject playerPrefab;
+namespace Com.NikfortGames.MyGame {
+    public class SpawnPlayers : MonoBehaviour
+    {
+        #region  Public Fields
 
-    public float minX;
-    public float maxX;
-    public float minZ;
-    public float maxZ;
+        public GameObject playerPrefab;
+        public float minX;
+        public float maxX;
+        public float minZ;
+        public float maxZ;
+        public float y;
+        
+        #endregion
 
-    private void Start() {
-        //Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ));
-        //PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+
+
+        #region MonoBehaviour Callbacks
+
+        private void Start() {
+            Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
+            PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+        }
+
+        #endregion
+
+
     }
 }
+
