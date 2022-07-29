@@ -25,6 +25,7 @@ namespace Com.NikfortGames.MyGame{
 
         [Tooltip("UI Slider to display Player's Health")]
         [SerializeField] private Slider playerHealthSlider;
+        [SerializeField] private Slider playerManaSlider;
 
         private Player target;
         float characterControllerHeight = 0f;
@@ -48,6 +49,10 @@ namespace Com.NikfortGames.MyGame{
             // Reflect the Player Health
             if(playerHealthSlider != null) {
                 playerHealthSlider.value = target.currentHealth;
+            }
+            // Reflect the Player Mana
+            if(playerManaSlider != null) {
+                playerManaSlider.value = target.currentMana;
             }
 
             //Destroy itself if the target is null. It's a fail safe when Photon is destroying Instances of a Player over the network

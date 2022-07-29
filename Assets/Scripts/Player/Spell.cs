@@ -21,7 +21,7 @@ namespace Com.NikfortGames.MyGame {
 
         #endregion
 
-        #region Private Fields
+        #region MonoBehavior Callbacks
 
         private void Start() {
             Destroy(gameObject, 5);
@@ -59,9 +59,6 @@ namespace Com.NikfortGames.MyGame {
         }
 
         #endregion
-
-
-
 
     }
 

@@ -103,7 +103,6 @@ namespace Com.NikfortGames.MyGame {
 
         public void SpendMana(int mana){
             currentMana -= mana;
-            Debug.Log("currentMana " + currentMana);
         }
 
         #endregion

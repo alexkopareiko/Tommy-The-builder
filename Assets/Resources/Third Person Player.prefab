@@ -173,7 +173,7 @@ MonoBehaviour:
   currentHealth: 0
   maxMana: 100
   currentMana: 0
-  playerUiLabelPrefab: {fileID: 5725312876370873188, guid: 49719216df10efe4dad2fac6f72a9eb2, type: 3}
+  playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
 --- !u!114 &2599562869596931382
 MonoBehaviour:
   m_ObjectHideFlags: 0

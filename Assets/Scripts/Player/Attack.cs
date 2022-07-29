@@ -16,12 +16,14 @@ namespace Com.NikfortGames.MyGame {
                 stream.SendNext(ableToAttack);
                 stream.SendNext(attackNumber);
                 stream.SendNext(isCasting);
+                stream.SendNext(notMoving);
             }
             else {
                 // Network player, receive data
                 this.ableToAttack = (bool)stream.ReceiveNext();
                 this.attackNumber = (int)stream.ReceiveNext();
                 this.isCasting = (bool)stream.ReceiveNext();
+                this.notMoving = (bool)stream.ReceiveNext();
             }
         }
 
@@ -63,8 +65,8 @@ namespace Com.NikfortGames.MyGame {
         private Player player;
         private ThirdPersonMovement thirdPersonMovement;
         private int attackNumber;
-
         private SphereCollider staffHitPointCollider;
+        private bool resetCasting;
 
         int SPEAR_ATTACK = 1;
         // int FIREBALL_ATTACK = 2;
@@ -88,8 +90,12 @@ namespace Com.NikfortGames.MyGame {
         }
 
         private void Update() {
+
             if(photonView.IsMine) {
                 AttackFunc();
+            }
+            if(resetCasting) {
+                ResetCasting();
             }
 
             staffHitPointCollider.enabled = attackNumber == STAFF_ATTACK;
@@ -112,9 +118,13 @@ namespace Com.NikfortGames.MyGame {
                 Spell spell = vfx[0].GetComponent<Spell>();
                 timeToFire = Time.time + spell.castingTime;
                 if(player.currentMana >= spell.manaCost) {
-                    Debug.Log("spell.manaCost " + spell.manaCost);
-                    // currentSpell = SpearAttack(spell);
-                    photonView.RPC("StartSpellCastingIEnumarator", RpcTarget.AllViaServer, SPEAR_ATTACK);
+                    animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
+                    attackNumber = SPEAR_ATTACK;
+                    animator.SetInteger("attack_num", attackNumber);
+                    isCasting = true;
+                    animator.SetBool("isCasting", isCasting);
+                    currentSpell = SpearAttack(spell);
+                    StartCoroutine(currentSpell);
                 }
             }
             else if(Input.GetKeyDown(KeyCode.Alpha2) && ableToAttack) {
@@ -123,73 +133,32 @@ namespace Com.NikfortGames.MyGame {
                 currentSpell = StaffAttack(attackStaff.length);
                 StartCoroutine(currentSpell);
             }
-            // else if(Input.GetKeyDown(KeyCode.Alpha2) && Time.time >= timeToFire) {
-            //     timeToFire = Time.time + 1 / vfx[0].GetComponent<Spell>().fireRate;
-            //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
-            //     animator.SetTrigger("attack_staff");
-            //     Invoke("StaffAttack", attackStaff.length);
-            // }
-            // else if(Input.GetKeyDown(KeyCode.Alpha3) && Time.time >= timeToFire) {
-            //     timeToFire = Time.time + 1 / vfx[1].GetComponent<Spell>().fireRate;
-            //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
-            //     animator.SetTrigger("attack_fireball");
-            //     Invoke("FireballAttack", attackFireball.length);
-            // }
-            // else if(Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= timeToFire) {
-            //     timeToFire = Time.time + 1 / vfx[1].GetComponent<Spell>().fireRate;
-            //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
-            //     animator.SetTrigger("attack_shield");
-            //     // Invoke("SpawnVFX", attackShield.length);
-            // } else {
-            // }
-
             if(!notMoving) {
-                ResetCasting();
+                resetCasting = true;
             }
-        }
-
-        void PlayerHit(Vector3 bulletDir, Vector3 myDir) {
-            Vector2 bulletVector = new Vector2(bulletDir.x, bulletDir.z);
-            Vector2 myVector = new Vector2(myDir.x, myDir.z);
-            float angle = Vector2.Angle(bulletVector, myVector);
-            animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
-            if(angle <= 90) {
-                animator.SetTrigger("get_damage_back");
-            } else{
-                animator.SetTrigger("get_damage_front");
-            }
-            ResetCasting();
-        }
-
-        [PunRPC]
-        void StartSpellCastingIEnumarator(int _attackNumber){
-            animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
-            attackNumber = SPEAR_ATTACK;
-            animator.SetInteger("attack_num", attackNumber);
-            isCasting = true;
-            animator.SetBool("isCasting", isCasting);
-            Spell spell = vfx[_attackNumber - 1].GetComponent<Spell>();
-            currentSpell = SpearAttack(spell);
-            StartCoroutine(currentSpell);
         }
 
         IEnumerator SpearAttack(Spell spell) {
-            Debug.Log("spell.castingTime " + spell.castingTime);
             yield return new WaitForSeconds(spell.castingTime);
-            if(firepoint != null) {
+            if(firepoint != null && !resetCasting) {
                 player.SpendMana(spell.manaCost);
-                Spell projectile = vfx[0].GetComponent<Spell>();
-                Instantiate(projectile, firepoint.transform.position, player.transform.rotation);
-                ResetCasting();
+                photonView.RPC("ThrowSpell", RpcTarget.AllViaServer, 0);
+                resetCasting = true;
             } else {
                 Debug.Log("No Fire Point for Spear Attack");
             }
         }
 
+        [PunRPC]
+        void ThrowSpell(int _vfxIndex){
+            Spell projectile = vfx[_vfxIndex].GetComponent<Spell>();
+            Instantiate(projectile, firepoint.transform.position, player.transform.rotation);
+        }
+
         IEnumerator StaffAttack(float castingTime) {
             yield return new WaitForSeconds(castingTime);
             isCasting = true;
-            ResetCasting();
+            resetCasting = true;
         }
 
         // void FireballAttack() {
@@ -215,8 +184,10 @@ namespace Com.NikfortGames.MyGame {
         #region Public Methods
 
         public void ResetCasting() {
-            if(isCasting) {
+            resetCasting = false;
+             if(currentSpell != null) {
                 StopCoroutine(currentSpell);
+                StopAllCoroutines();
                 currentSpell = null;
                 isCasting = false;
                 animator.SetBool("isCasting", isCasting);
