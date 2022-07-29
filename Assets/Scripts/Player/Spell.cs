@@ -11,7 +11,6 @@ namespace Com.NikfortGames.MyGame {
 
         public float speed;
         public string spellName;
-        public int damage;
         public int manaCost;
         public float castingTime;
 
@@ -28,7 +27,7 @@ namespace Com.NikfortGames.MyGame {
             Destroy(gameObject, 5);
             if(muzzlePrefab != null) {
                 GameObject muzzleVFX = Instantiate(muzzlePrefab, transform.position, transform.rotation); 
-                DestroyGO(muzzleVFX);
+                DestroyMuzzle(muzzleVFX);
             }
         }
 
@@ -40,28 +39,15 @@ namespace Com.NikfortGames.MyGame {
             }
         }
 
-        private void OnCollisionEnter(Collision other) {
-            speed = 0;
-            if(other.gameObject.CompareTag("Player")){
-                Player enemy = other.gameObject.GetComponent<Player>();
-                enemy.TakeDamage(damage);
-                enemy.PlayerHit(transform.forward, other.transform.forward);
-            }
-            ContactPoint contact = other.contacts[0];
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            Vector3 pos = contact.point;
-            if(hitPrefab != null) {
-                GameObject hitVFX = Instantiate(hitPrefab, pos, rot);
-                DestroyGO(hitVFX);
-            }
-            Destroy(gameObject);    
+        private void OnTriggerEnter(Collider other) {
+            Destroy(gameObject);
         }
 
         #endregion
 
         #region Private Methods
 
-        void DestroyGO(GameObject vfx) {
+        void DestroyMuzzle(GameObject vfx) {
             ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
             if(ps != null) {
                     Destroy(vfx, ps.main.duration);

@@ -1,9 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Photon.Pun;
+
 namespace Com.NikfortGames.MyGame {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviourPunCallbacks, IPunObservable
     {
+
+        #region IPunObservable implementation
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+            if(stream.IsWriting) {
+                // we own this player: send the others our data
+                stream.SendNext(currentHealth);
+                stream.SendNext(currentMana);
+            }
+            else {
+                // Network player, receive data
+                this.currentHealth = (int)stream.ReceiveNext();
+                this.currentMana = (int)stream.ReceiveNext();
+            }
+        }
+
+        #endregion
 
         #region Public Fields
 
@@ -17,6 +37,9 @@ namespace Com.NikfortGames.MyGame {
         #region Private Fields
         private Animator animator;
 
+        [SerializeField]
+        private GameObject playerUiLabelPrefab;
+
         #endregion
 
 
@@ -28,6 +51,39 @@ namespace Com.NikfortGames.MyGame {
             currentHealth = maxHealth;
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
+            // Create the UI
+            if (playerUiLabelPrefab != null)
+            {
+                GameObject _uiGo = Instantiate(playerUiLabelPrefab);
+                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+            }
+            else
+            {
+                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on player Prefab.", this);
+            }
+        }
+
+        /// <summary> 
+        /// Player gets damage
+        /// </summary>
+        private void OnTriggerEnter(Collider other) {
+            if(!photonView.IsMine) {
+                return;
+            }
+            if(other.CompareTag("PlayerStaffHit")) {
+                int damage = GetComponent<Attack>().attackDamageStaff;
+                TakeDamage(damage);
+                PlayerHitAnimation(other.transform.forward);
+            } else if(other.CompareTag("SpearSpell")) {
+                int damage = GetComponent<Attack>().attackDamageSpear;
+                TakeDamage(damage);
+                PlayerHitAnimation(other.transform.forward);
+            } else if(other.CompareTag("FireballSpell")) {
+                int damage = GetComponent<Attack>().attackDamageFireball;
+                TakeDamage(damage);
+                PlayerHitAnimation(other.transform.forward);
+            }
+            
         }
 
         #endregion
@@ -45,18 +101,6 @@ namespace Com.NikfortGames.MyGame {
             }
         }
 
-        public void PlayerHit(Vector3 bulletDir, Vector3 myDir) {
-            Vector2 bulletVector = new Vector2(bulletDir.x, bulletDir.z);
-            Vector2 myVector = new Vector2(myDir.x, myDir.z);
-            float angle = Vector2.Angle(bulletVector, myVector);
-            animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
-            if(angle <= 90) {
-                animator.SetTrigger("get_damage_back");
-            } else{
-                animator.SetTrigger("get_damage_front");
-            }
-            GetComponent<Attack>().ResetCasting();
-        }
         public void SpendMana(int mana){
             currentMana -= mana;
             Debug.Log("currentMana " + currentMana);
@@ -75,6 +119,20 @@ namespace Com.NikfortGames.MyGame {
             // Die animation
 
             // Disable the enemy
+        }
+
+        
+        void PlayerHitAnimation(Vector3 bulletDir) {
+            Vector2 bulletVector = new Vector2(bulletDir.x, bulletDir.z);
+            Vector2 myVector = new Vector2(transform.forward.x, transform.forward.z);
+            float angle = Vector2.Angle(bulletVector, myVector);
+            animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
+            if(angle <= 90) {
+                animator.SetTrigger("get_damage_back");
+            } else{
+                animator.SetTrigger("get_damage_front");
+            }
+            GetComponent<Attack>().ResetCasting();
         }
 
         #endregion

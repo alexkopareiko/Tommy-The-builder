@@ -50,13 +50,11 @@ namespace Com.NikfortGames.MyGame {
         }
 
         private void Update() {
-            if(photonView.IsMine) {
-                if(player.currentHealth > 0) {
-                    if(!controller.enabled) controller.enabled = true;
-                    Move();
-                } else {
-                    if(controller.enabled) controller.enabled = false;
-                }
+            if(player.currentHealth > 0) {
+                if(!controller.enabled) controller.enabled = true;
+                if(photonView.IsMine) Move();
+            } else {
+                if(controller.enabled) controller.enabled = false;
             }
         }
 

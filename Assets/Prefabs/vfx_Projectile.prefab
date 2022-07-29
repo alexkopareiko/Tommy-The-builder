@@ -4966,7 +4966,7 @@ GameObject:
   - component: {fileID: 5897931069342375211}
   m_Layer: 0
   m_Name: vfx_Projectile
-  m_TagString: Untagged
+  m_TagString: SpearSpell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5003,7 +5003,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   spellName: Spear
-  damage: 5
   manaCost: 10
   castingTime: 0.5
   coolDown: 1
@@ -5017,7 +5016,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9186516990293965276}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.52198553, z: 2.1526153}
