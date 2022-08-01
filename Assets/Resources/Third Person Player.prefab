@@ -174,6 +174,7 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
+  playerUiTopLeftPrefab: {fileID: 5058009877376357399, guid: 7fa72709b3dbb994bb5eafd176e34fa1, type: 3}
 --- !u!114 &2599562869596931382
 MonoBehaviour:
   m_ObjectHideFlags: 0

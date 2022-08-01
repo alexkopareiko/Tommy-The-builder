@@ -40,6 +40,9 @@ namespace Com.NikfortGames.MyGame {
         [SerializeField]
         private GameObject playerUiLabelPrefab;
 
+        [SerializeField]
+        private GameObject playerUiTopLeftPrefab;
+
         #endregion
 
 
@@ -51,16 +54,28 @@ namespace Com.NikfortGames.MyGame {
             currentHealth = maxHealth;
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
-            // Create the UI
-            if (playerUiLabelPrefab != null)
-            {
-                GameObject _uiGo = Instantiate(playerUiLabelPrefab);
-                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+            if(!photonView.IsMine) {
+                if (playerUiLabelPrefab != null)
+                {
+                    GameObject _uiGo = Instantiate(playerUiLabelPrefab);
+                    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+                } else
+                {
+                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on player Prefab.", this);
+                }
             }
-            else
-            {
-                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on player Prefab.", this);
-            }
+            else {
+                if (playerUiTopLeftPrefab != null)
+                {
+                    GameObject _uiGo = Instantiate(playerUiTopLeftPrefab);
+                    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+                } else
+                {
+                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiTopLeftPrefab reference on player Prefab.", this);
+                }
+            }            
+
+
         }
 
         /// <summary> 
@@ -94,7 +109,6 @@ namespace Com.NikfortGames.MyGame {
         public void TakeDamage(int damage){
             if(currentHealth > 0) {
                 currentHealth -= damage;
-                Debug.Log("currentHealth " + currentHealth);
                 if(currentHealth <= 0) {
                     Die();
                 }
@@ -111,13 +125,8 @@ namespace Com.NikfortGames.MyGame {
         #region Private Methods
 
         void Die() {
-            Debug.Log("Player died");
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
             animator.SetBool("isDead", true);
-
-            // Die animation
-
-            // Disable the enemy
         }
 
         

@@ -348,7 +348,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8777555, y: 1}
+    m_SensorSize: {x: 1.71875, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -990,7 +990,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8777555, y: 1}
+    m_SensorSize: {x: 1.71875, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1976,7 +1976,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8777555, y: 1}
+    m_SensorSize: {x: 1.71875, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2054,7 +2054,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8777555, y: 1}
+    m_SensorSize: {x: 1.71875, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2810,6 +2810,8 @@ MonoBehaviour:
   LeftHandPoint: {fileID: 0}
   staffHitPoint: {fileID: 0}
   attackDamageStaff: 5
+  attackDamageSpear: 20
+  attackDamageFireball: 40
   staffAttackLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -2864,6 +2866,7 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   playerUiLabelPrefab: {fileID: 0}
+  playerUiTopLeftPrefab: {fileID: 0}
 --- !u!82 &1884243391
 AudioSource:
   m_ObjectHideFlags: 0
