@@ -15,6 +15,8 @@ namespace Com.NikfortGames.MyGame{
         [Tooltip("Pixel offset from the player target")]
         [SerializeField] private Vector3 screenOffset = new Vector3(0f,30f,0f);
 
+        public float visibileDistanceOfLabel = 40f;
+
         #endregion
 
 
@@ -23,9 +25,8 @@ namespace Com.NikfortGames.MyGame{
         [Tooltip("UI Text to display Player's Name")]
         [SerializeField] private TMP_Text playerNameText;
 
-        [Tooltip("UI Slider to display Player's Health")]
-        [SerializeField] private Slider playerHealthSlider;
-        [SerializeField] private Slider playerManaSlider;
+        // [SerializeField] private Slider playerHealthSlider;
+        // [SerializeField] private Slider playerManaSlider;
 
         private Player target;
         float characterControllerHeight = 0f;
@@ -44,16 +45,15 @@ namespace Com.NikfortGames.MyGame{
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
-
         private void Update() {
             // Reflect the Player Health
-            if(playerHealthSlider != null) {
-                playerHealthSlider.value = target.currentHealth;
-            }
-            // Reflect the Player Mana
-            if(playerManaSlider != null) {
-                playerManaSlider.value = target.currentMana;
-            }
+            // if(playerHealthSlider != null) {
+            //     playerHealthSlider.value = target.currentHealth;
+            // }
+            // // Reflect the Player Mana
+            // if(playerManaSlider != null) {
+            //     playerManaSlider.value = target.currentMana;
+            // }
 
             //Destroy itself if the target is null. It's a fail safe when Photon is destroying Instances of a Player over the network
             if(target == null) {
@@ -64,8 +64,9 @@ namespace Com.NikfortGames.MyGame{
 
         private void LateUpdate() {
             // Do not show the UI we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself
+            float dist = Vector3.Distance(targetTransform.position, Camera.main.transform.position);
             if(targetRenderer != null) {
-                _canvasGroup.alpha = targetRenderer.isVisible ? 1f : 0f;
+                _canvasGroup.alpha = (targetRenderer.isVisible && dist <= visibileDistanceOfLabel) ? 1f : 0f;
             }
 
             // #Critical
@@ -73,7 +74,7 @@ namespace Com.NikfortGames.MyGame{
             if(targetTransform != null) {
                 targetPosition = targetTransform.position;
                 targetPosition.y += characterControllerHeight;
-                transform.position = Camera.main.WorldToScreenPoint(targetPosition) + screenOffset;
+                transform.position = Camera.main.WorldToScreenPoint(targetPosition + screenOffset);
             }
         }
 
@@ -91,7 +92,7 @@ namespace Com.NikfortGames.MyGame{
             // Cache references for efficiency
             target = _target;
             targetTransform = target.GetComponent<Transform>();
-            targetRenderer = target.GetComponent<Renderer>();
+            targetRenderer = target.GetComponentInChildren<SkinnedMeshRenderer>();
             CharacterController characterController = _target.GetComponent<CharacterController>();
             // Get data from the Player that won't change during the lifetime of this Component
             if(characterController != null) {

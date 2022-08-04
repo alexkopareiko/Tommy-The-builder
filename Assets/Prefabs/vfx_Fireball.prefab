@@ -4863,7 +4863,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   spellName: Fireball
-  damage: 20
   manaCost: 30
   castingTime: 2
   coolDown: 1

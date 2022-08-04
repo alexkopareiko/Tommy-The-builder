@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 using Photon.Pun;
 
 namespace Com.NikfortGames.MyGame {
@@ -15,11 +16,13 @@ namespace Com.NikfortGames.MyGame {
                 // we own this player: send the others our data
                 stream.SendNext(currentHealth);
                 stream.SendNext(currentMana);
+                stream.SendNext(ownerId);
             }
             else {
                 // Network player, receive data
                 this.currentHealth = (int)stream.ReceiveNext();
                 this.currentMana = (int)stream.ReceiveNext();
+                this.ownerId = (int)stream.ReceiveNext();
             }
         }
 
@@ -31,6 +34,8 @@ namespace Com.NikfortGames.MyGame {
         public int currentHealth;
         public int maxMana = 100;
         public int currentMana;
+ 
+        public int ownerId;
 
         #endregion
 
@@ -51,6 +56,8 @@ namespace Com.NikfortGames.MyGame {
 
         void Start()
         {
+            // ownerId = PhotonNetwork.LocalPlayer.ActorNumber;
+            ownerId = photonView.ViewID;
             currentHealth = maxHealth;
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
@@ -78,6 +85,7 @@ namespace Com.NikfortGames.MyGame {
 
         }
 
+  
         /// <summary> 
         /// Player gets damage
         /// </summary>
@@ -105,6 +113,8 @@ namespace Com.NikfortGames.MyGame {
 
 
         #region Public Methods
+
+
 
         public void TakeDamage(int damage){
             if(currentHealth > 0) {

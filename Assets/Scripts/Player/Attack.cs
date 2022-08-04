@@ -38,7 +38,7 @@ namespace Com.NikfortGames.MyGame {
         public int attackDamageSpear = 20;
         public int attackDamageFireball = 40;
         public LayerMask staffAttackLayerMask;
-        public float staffAttackPointRadius = 2f;
+        public Vector3 staffAttackPointSize;
         public List<GameObject> vfx = new List<GameObject> ();
 
         #region AnimationClips
@@ -65,7 +65,7 @@ namespace Com.NikfortGames.MyGame {
         private Player player;
         private ThirdPersonMovement thirdPersonMovement;
         private int attackNumber;
-        private SphereCollider staffHitPointCollider;
+        private BoxCollider staffHitPointCollider;
         private bool resetCasting;
 
         int SPEAR_ATTACK = 1;
@@ -84,8 +84,8 @@ namespace Com.NikfortGames.MyGame {
             thirdPersonMovement = GetComponent<ThirdPersonMovement>();
             animator = GetComponentInChildren<Animator>();
             controller = GetComponent<CharacterController>();
-            staffHitPointCollider = staffHitPoint.GetComponent<SphereCollider>();
-            staffHitPointCollider.radius = staffAttackPointRadius;
+            staffHitPointCollider = staffHitPoint.GetComponent<BoxCollider>();
+            staffHitPointCollider.size = staffAttackPointSize;
             staffHitPointCollider.enabled = false;
         }
 
@@ -174,7 +174,7 @@ namespace Com.NikfortGames.MyGame {
 
         void OnDrawGizmosSelected() {
             if(staffHitPoint != null) {
-                Gizmos.DrawWireSphere(staffHitPoint.transform.position, staffAttackPointRadius);
+                Gizmos.DrawWireCube(staffHitPoint.transform.position, staffAttackPointSize);
             }
         }
     

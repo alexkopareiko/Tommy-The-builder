@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2599562869596931383}
   - component: {fileID: 2599562869596931382}
   - component: {fileID: 2599562869596931380}
+  - component: {fileID: 5126312449433750530}
   - component: {fileID: 1279752818409719123}
   - component: {fileID: 1548536922540450729}
   m_Layer: 6
@@ -35,8 +36,8 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2599562870536047713}
   - {fileID: 2574143595169177858}
+  - {fileID: 2599562870536047713}
   - {fileID: 2599562869990307352}
   - {fileID: 2608578740983130483}
   - {fileID: 8929819365377372173}
@@ -55,7 +56,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.98
-  m_Radius: 0.23
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.72
   m_SkinWidth: 0.08
@@ -173,6 +174,7 @@ MonoBehaviour:
   currentHealth: 0
   maxMana: 100
   currentMana: 0
+  ownerId: 0
   playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
   playerUiTopLeftPrefab: {fileID: 5058009877376357399, guid: 7fa72709b3dbb994bb5eafd176e34fa1, type: 3}
 --- !u!114 &2599562869596931382
@@ -222,7 +224,7 @@ MonoBehaviour:
   staffAttackLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  staffAttackPointRadius: 1.78
+  staffAttackPointSize: {x: 3, y: 3, z: 2}
   vfx:
   - {fileID: 9186516990293965276, guid: 1e1046652a6b7b7488408ae9002760ee, type: 3}
   - {fileID: 3923959449065470854, guid: 63b687d20481ff048bb505c0eb2e4f33, type: 3}
@@ -231,6 +233,21 @@ MonoBehaviour:
   attackSpear: {fileID: -8222820210870594992, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   attackStaff: {fileID: 6233698504422847411, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   isCasting: 0
+--- !u!114 &5126312449433750530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599562869596931372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b743dd5ba0f5e468513570fc99ac71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matOfTerrainWithCircleShader: {fileID: 2100000, guid: 4acf9d1c868dedc4092faaaa030bd221, type: 2}
+  focusDistance: 75
+  focus: {fileID: 0}
 --- !u!114 &1279752818409719123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +404,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2599562869596931376}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2599562870536047715
 MeshFilter:
@@ -525,7 +542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2608578741722376823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 37.7}
+  m_LocalPosition: {x: -0.5, y: 0, z: 41.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -672,6 +689,100 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!1 &5594997159865758305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1193960970259684083}
+  - component: {fileID: 5954848814545658493}
+  m_Layer: 6
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1193960970259684083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594997159865758305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 37.91}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2574143595669717406}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &5954848814545658493
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594997159865758305}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 0.390625, g: 0, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 1
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &6455575974764567336
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +794,7 @@ GameObject:
   - component: {fileID: 8929819365377372173}
   - component: {fileID: 7079674450387182364}
   - component: {fileID: 4033491106465018016}
-  - component: {fileID: 2295281379132284644}
+  - component: {fileID: 3448400460874219654}
   m_Layer: 0
   m_Name: HitPoint
   m_TagString: PlayerStaffHit
@@ -756,8 +867,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2295281379132284644
-SphereCollider:
+--- !u!65 &3448400460874219654
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -765,9 +876,9 @@ SphereCollider:
   m_GameObject: {fileID: 6455575974764567336}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 1.78
+  m_Size: {x: 3, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2608578740866836085
 PrefabInstance:
@@ -844,7 +955,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b585e2467dd570541844e46abf3023c6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b585e2467dd570541844e46abf3023c6, type: 3}
       propertyPath: m_LocalPosition.x
