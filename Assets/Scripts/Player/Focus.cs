@@ -17,9 +17,18 @@ namespace Com.NikfortGames.MyGame {
         [Tooltip("No need initialize")]
         public Player focus;
 
+        [Tooltip("Focus character prefab near mine")]
+        public GameObject playerUITopFocusPrefab;
+        #endregion
+
+        #region Private Fields
+
+        GameObject playerUITopFocus;
+
         #endregion
 
         #region MonoBehavoiur Callbacks
+
         private void Update() {
             if(photonView.IsMine) {
                 InteractWith();
@@ -32,6 +41,21 @@ namespace Com.NikfortGames.MyGame {
         #endregion
 
         #region Private Methods
+
+        void SetPlayerUITopFocus() {
+            if(playerUITopFocusPrefab != null) {
+                if(focus != null) {
+                    if(playerUITopFocus != null) Destroy(playerUITopFocus.gameObject);
+                    playerUITopFocus = Instantiate(playerUITopFocusPrefab);
+                    playerUITopFocus.SendMessage("SetTarget", focus, SendMessageOptions.RequireReceiver);
+                } else if (focus == null && playerUITopFocus != null) {
+                    Destroy(playerUITopFocus.gameObject);
+                    playerUITopFocus = null; 
+                } 
+            } else {
+                Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUITopFocus reference on player Prefab.", this);
+            }
+        }
 
         void DeFocusOnDistance(){
             if(focus == null) return;
@@ -66,6 +90,7 @@ namespace Com.NikfortGames.MyGame {
                     } else {
                          focus = null;
                     }
+                    SetPlayerUITopFocus();
                 }
             }
         }
