@@ -175,10 +175,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062af99c81f38b442a8d8f890d19444a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellIcon: {fileID: 11400000, guid: dd914d73cc018eb4d9ef65a2c8de7b9e, type: 2}
+  spellIcon: {fileID: 0}
   isDisabled: 0
-  highlightIcon: {fileID: 2514741708773470784}
   disabledIcon: {fileID: 5497734375024858117}
+  numberText: {fileID: 811805774103693025}
+  highlightIcon: {fileID: 2514741708773470784}
   image: {fileID: 811805774057563845}
   button: {fileID: 811805773706285002}
 --- !u!1 &811805774057563707
@@ -253,8 +254,8 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &811805774103693031
@@ -485,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1535787809861435787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -535,12 +536,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: a3366944316fe6d49ad81442d97ab8d0, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillAmount: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1

@@ -18,6 +18,7 @@ namespace Com.NikfortGames.MyGame {
         public float coolDown;
         public GameObject muzzlePrefab;
         public GameObject hitPrefab;
+        public Player target;
 
         #endregion
 
@@ -33,9 +34,19 @@ namespace Com.NikfortGames.MyGame {
 
         private void Update() {
             if(speed != 0) {
+                
                 transform.position += transform.forward * (speed * Time.deltaTime);
             } else {
                 Debug.Log("No speed");
+            }
+        }
+
+        private void LateUpdate() {
+            if(speed != 0) {
+                if(target != null) {
+                    Transform lookAt = target.GetComponent<ThirdPersonMovement>().cameraLookHere;
+                    transform.LookAt(lookAt.position);
+                }
             }
         }
 
@@ -56,6 +67,19 @@ namespace Com.NikfortGames.MyGame {
                 ParticleSystem psChild = vfx.transform.GetChild(0).GetComponent<ParticleSystem>();
                 Destroy(vfx, psChild.main.duration);
             }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void SetTarget(Player _target) {
+            if(_target == null) {
+                Debug.LogError("<Color=Red><a>Missing</a></Color> Player _target target for Spell.SetTarget", this);
+                return;
+            }
+            // Cache references for efficiency
+            target = _target;
         }
 
         #endregion

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4933ff568f7337f43bdb9e7942757898, type: 3}
   m_Name: StaffKickIcon
   m_EditorClassIdentifier: 
-  keyCode: 50
+  keyCode: 49
   sprite: {fileID: 21300000, guid: 9d00ca4dc1f9fe04c8118afe2f3f2f69, type: 3}

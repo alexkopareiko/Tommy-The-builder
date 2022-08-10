@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 2599562869596931382}
   - component: {fileID: 2599562869596931380}
   - component: {fileID: 5126312449433750530}
-  - component: {fileID: 1279752818409719123}
+  - component: {fileID: 2050493017017948608}
   - component: {fileID: 1548536922540450729}
+  - component: {fileID: 2581173982586421898}
   m_Layer: 6
   m_Name: Third Person Player
   m_TagString: Player
@@ -175,8 +176,6 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   ownerId: 0
-  playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
-  playerUiTopLeftPrefab: {fileID: 5058009877376357399, guid: 7fa72709b3dbb994bb5eafd176e34fa1, type: 3}
 --- !u!114 &2599562869596931382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +232,15 @@ MonoBehaviour:
   attackSpear: {fileID: -8222820210870594992, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   attackStaff: {fileID: 6233698504422847411, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   isCasting: 0
+  spellProgressPrefab: {fileID: 639062733, guid: e576459f212ebeb479e9208fc42940fd, type: 3}
+  abilityImage1: {fileID: 0}
+  coolDown1: 5
+  isCoolDown1: 0
+  keyCode1: 0
+  abilityImage2: {fileID: 0}
+  coolDown2: 1
+  isCoolDown2: 0
+  keyCode2: 0
 --- !u!114 &5126312449433750530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,8 +256,41 @@ MonoBehaviour:
   matOfTerrainWithCircleShader: {fileID: 2100000, guid: 4acf9d1c868dedc4092faaaa030bd221, type: 2}
   focusDistance: 75
   focus: {fileID: 0}
+  focusViewId: 0
   playerUITopFocusPrefab: {fileID: 7003658209210210193, guid: ce52ba4e49a0a8a41b90b4ee11942fa4, type: 3}
---- !u!114 &1279752818409719123
+  EMPTY_FOCUS: -1
+--- !u!114 &2050493017017948608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599562869596931372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c212c5c818d0c41b2464f23865a667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
+  playerUiTopLeftPrefab: {fileID: 5058009877376357399, guid: 7fa72709b3dbb994bb5eafd176e34fa1, type: 3}
+  playerUiBottomPanelPrefab: {fileID: 2334285966228208785, guid: 9cb31ce893e93f54f8108b536395383b, type: 3}
+--- !u!114 &1548536922540450729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599562869596931372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2581173982586421898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,27 +311,12 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2599562869596931383}
   - {fileID: 2599562869596931380}
+  - {fileID: 5126312449433750530}
   - {fileID: 1548536922540450729}
   - {fileID: 8682456938301474485}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1548536922540450729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2599562869596931372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &2599562869990307353
 GameObject:
   m_ObjectHideFlags: 0

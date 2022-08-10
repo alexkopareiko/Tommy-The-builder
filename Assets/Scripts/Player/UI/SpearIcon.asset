@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4933ff568f7337f43bdb9e7942757898, type: 3}
   m_Name: SpearIcon
   m_EditorClassIdentifier: 
-  keyCode: 49
+  keyCode: 50
   sprite: {fileID: 21300000, guid: 7854166b66e70a9429f9bb4eef8ffff4, type: 3}

@@ -7,8 +7,24 @@ using Photon.Pun;
 
 
 namespace Com.NikfortGames.MyGame {
-    public class Focus : MonoBehaviourPunCallbacks
+    public class Focus : MonoBehaviourPunCallbacks, IPunObservable
     {
+
+        #region IPunObservable implementation
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+            if(stream.IsWriting) {
+                // we own this player: send the others our data
+                stream.SendNext(focusViewId);
+            }
+            else {
+                // Network player, receive data
+                this.focusViewId = (int)stream.ReceiveNext();
+            }
+        }
+
+        #endregion
+
         #region Public Fields
 
         public Material matOfTerrainWithCircleShader;
@@ -17,13 +33,19 @@ namespace Com.NikfortGames.MyGame {
         [Tooltip("No need initialize")]
         public Player focus;
 
+        [Tooltip("No need initialize. The view ID of focus character")]
+        public int focusViewId;
+
         [Tooltip("Focus character prefab near mine")]
         public GameObject playerUITopFocusPrefab;
+        
+        public int EMPTY_FOCUS = -1;
         #endregion
 
         #region Private Fields
 
         GameObject playerUITopFocus;
+
 
         #endregion
 
@@ -31,9 +53,10 @@ namespace Com.NikfortGames.MyGame {
 
         private void Update() {
             if(photonView.IsMine) {
+                // Debug.LogError(GetComponent<Player>().ownerId);
                 InteractWith();
                 SetCirclePosition();
-                DeFocusOnDistance();
+                DeFocusOnDistance();               
             } 
         }
 
@@ -87,8 +110,10 @@ namespace Com.NikfortGames.MyGame {
                     if (_enemy != null && _myId != _enemy.ownerId)
                     {
                         focus = _enemy;
+                        focusViewId = _enemy.ownerId;
                     } else {
-                         focus = null;
+                        focus = null;
+                        focusViewId = EMPTY_FOCUS;
                     }
                     SetPlayerUITopFocus();
                 }

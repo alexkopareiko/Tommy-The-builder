@@ -67,7 +67,7 @@ namespace Com.NikfortGames.MyGame {
 
         public void SetTarget(Player _target) {
             if(_target == null) {
-                Debug.LogError("<Color=Red><a>Missing</a></Color> PlayMakerManager target for PlayerUI.SetTarget", this);
+                Debug.LogError("<Color=Red><a>Missing</a></Color> Player _target target for PlayerUITopFocus.SetTarget", this);
                 return;
             }
             // Cache references for efficiency

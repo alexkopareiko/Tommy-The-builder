@@ -6,7 +6,7 @@ using UnityEngine;
 using Photon.Pun;
 
 namespace Com.NikfortGames.MyGame {
-    public class Player : MonoBehaviourPunCallbacks, IPunObservable
+    public class Player : MonoBehaviourPunCallbacks, IPunObservable, IPunInstantiateMagicCallback
     {
 
         #region IPunObservable implementation
@@ -28,6 +28,16 @@ namespace Com.NikfortGames.MyGame {
 
         #endregion
 
+        #region Photon Callbacks
+
+        public void OnPhotonInstantiate(PhotonMessageInfo info)
+        {
+            info.Sender.TagObject = this.gameObject;
+        }
+
+
+        #endregion
+
         #region Public Fields
 
         public int maxHealth = 100;
@@ -42,12 +52,6 @@ namespace Com.NikfortGames.MyGame {
         #region Private Fields
         private Animator animator;
 
-        [SerializeField]
-        private GameObject playerUiLabelPrefab;
-
-        [SerializeField]
-        private GameObject playerUiTopLeftPrefab;
-
         #endregion
 
 
@@ -56,33 +60,10 @@ namespace Com.NikfortGames.MyGame {
 
         void Start()
         {
-            // ownerId = PhotonNetwork.LocalPlayer.ActorNumber;
-            ownerId = photonView.ViewID;
+            ownerId = PhotonNetwork.LocalPlayer.ActorNumber;
             currentHealth = maxHealth;
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
-            if(!photonView.IsMine) {
-                if (playerUiLabelPrefab != null)
-                {
-                    GameObject _uiGo = Instantiate(playerUiLabelPrefab);
-                    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-                } else
-                {
-                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on player Prefab.", this);
-                }
-            }
-            else {
-                if (playerUiTopLeftPrefab != null)
-                {
-                    GameObject _uiGo = Instantiate(playerUiTopLeftPrefab);
-                    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-                } else
-                {
-                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiTopLeftPrefab reference on player Prefab.", this);
-                }
-            }            
-
-
         }
 
   
@@ -141,9 +122,7 @@ namespace Com.NikfortGames.MyGame {
 
         
         void PlayerHitAnimation(Vector3 bulletDir) {
-            Vector2 bulletVector = new Vector2(bulletDir.x, bulletDir.z);
-            Vector2 myVector = new Vector2(transform.forward.x, transform.forward.z);
-            float angle = Vector2.Angle(bulletVector, myVector);
+            float angle = Helpers.GetXZAngle(bulletDir, transform.forward);
             animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
             if(angle <= 90) {
                 animator.SetTrigger("get_damage_back");
