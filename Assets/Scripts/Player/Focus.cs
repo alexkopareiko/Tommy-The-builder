@@ -15,11 +15,11 @@ namespace Com.NikfortGames.MyGame {
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
             if(stream.IsWriting) {
                 // we own this player: send the others our data
-                stream.SendNext(focusViewId);
+                stream.SendNext(focusId);
             }
             else {
                 // Network player, receive data
-                this.focusViewId = (int)stream.ReceiveNext();
+                this.focusId = (int)stream.ReceiveNext();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Com.NikfortGames.MyGame {
         public Player focus;
 
         [Tooltip("No need initialize. The view ID of focus character")]
-        public int focusViewId;
+        public int focusId;
 
         [Tooltip("Focus character prefab near mine")]
         public GameObject playerUITopFocusPrefab;
@@ -110,10 +110,10 @@ namespace Com.NikfortGames.MyGame {
                     if (_enemy != null && _myId != _enemy.ownerId)
                     {
                         focus = _enemy;
-                        focusViewId = _enemy.ownerId;
+                        focusId = _enemy.ownerId;
                     } else {
                         focus = null;
-                        focusViewId = EMPTY_FOCUS;
+                        focusId = EMPTY_FOCUS;
                     }
                     SetPlayerUITopFocus();
                 }

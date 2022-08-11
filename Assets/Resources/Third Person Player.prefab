@@ -256,7 +256,7 @@ MonoBehaviour:
   matOfTerrainWithCircleShader: {fileID: 2100000, guid: 4acf9d1c868dedc4092faaaa030bd221, type: 2}
   focusDistance: 75
   focus: {fileID: 0}
-  focusViewId: 0
+  focusId: 0
   playerUITopFocusPrefab: {fileID: 7003658209210210193, guid: ce52ba4e49a0a8a41b90b4ee11942fa4, type: 3}
   EMPTY_FOCUS: -1
 --- !u!114 &2050493017017948608

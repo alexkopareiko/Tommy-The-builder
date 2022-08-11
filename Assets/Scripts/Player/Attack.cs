@@ -245,7 +245,7 @@ namespace Com.NikfortGames.MyGame {
                     _projectile.SetTarget(target);
                 }
             } else {
-                int playerUITopFocus = GetComponent<Focus>().focusViewId;
+                int playerUITopFocus = GetComponent<Focus>().focusId;
                 int EMPTY_FOCUS = GetComponent<Focus>().EMPTY_FOCUS;
                 if(playerUITopFocus != EMPTY_FOCUS) {
                     var _target = PhotonNetwork.CurrentRoom.GetPlayer(playerUITopFocus);
