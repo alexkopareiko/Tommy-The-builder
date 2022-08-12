@@ -9,11 +9,13 @@ namespace Com.NikfortGames.MyGame {
         #region  Public Fields
 
         public GameObject playerPrefab;
-        public float minX;
-        public float maxX;
-        public float minZ;
-        public float maxZ;
-        public float y;
+        public static float minX;
+        public static float maxX;
+        public static float minZ;
+        public static float maxZ;
+        public static float y;
+
+        public static float delayAfterDeath = 3f;
         
         #endregion
 
@@ -22,8 +24,23 @@ namespace Com.NikfortGames.MyGame {
         #region MonoBehaviour Callbacks
 
         private void Start() {
+            PhotonNetwork.Instantiate(playerPrefab.name, GetSpawnPosition(), Quaternion.identity);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public static Vector3 GetSpawnPosition(){
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
-            PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+            return randomPosition;
+        }
+
+        public static IEnumerator RespawnMe(Player player) {
+            yield return new WaitForSeconds(delayAfterDeath);
+            player.currentHealth = player.maxHealth;
+            player.currentMana = player.maxMana;
+            player.transform.position = GetSpawnPosition();
         }
 
         #endregion

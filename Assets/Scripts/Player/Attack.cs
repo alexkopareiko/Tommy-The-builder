@@ -188,7 +188,7 @@ namespace Com.NikfortGames.MyGame {
             /// </summary>
             if(Input.GetKeyDown(keyCode2) && notMoving && ableToAttack && !isCoolDown2) {
                 Player _target = GetComponent<Focus>().focus;
-                if(_target == null) {
+                if(_target == null || _target.currentHealth <= 0) {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.");
                     return;
                 }
@@ -202,6 +202,8 @@ namespace Com.NikfortGames.MyGame {
                     animator.SetBool("isCasting", isCasting);
                     currentSpell = SpearAttack(spell);
                     StartCoroutine(currentSpell);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
             }
             if(!notMoving) {

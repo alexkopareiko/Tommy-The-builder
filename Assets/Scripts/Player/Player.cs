@@ -67,6 +67,12 @@ namespace Com.NikfortGames.MyGame {
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
         }
+
+        private void Update() {
+            if(photonView.IsMine) {
+                CheckIfDeadAndReAssign();
+            }
+        }
   
         /// <summary> 
         /// Player gets damage
@@ -96,8 +102,6 @@ namespace Com.NikfortGames.MyGame {
 
         #region Public Methods
 
-
-
         public void TakeDamage(int damage){
             if(currentHealth > 0) {
                 currentHealth -= damage;
@@ -119,7 +123,17 @@ namespace Com.NikfortGames.MyGame {
         void Die() {
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
             animator.SetBool("isDead", true);
+            StartCoroutine(SpawnPlayers.RespawnMe(this));
         }
+
+        void CheckIfDeadAndReAssign(){
+            if(animator.GetBool("isDead") && currentHealth > 0) {
+                animator.SetLayerWeight(animator.GetLayerIndex("Die"), 0);
+                animator.SetBool("isDead", false);
+            }
+        }
+
+        
 
         
         void PlayerHitAnimation(Vector3 bulletDir) {
