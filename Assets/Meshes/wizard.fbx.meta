@@ -134,24 +134,17 @@ ModelImporter:
       translation DOF on avatar to improve retargeting quality.\n\t'DEF-spine.004'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-thigh.L'
       has scale animation that will be discarded.\n\t'DEF-shin.L' has scale animation
-      that will be discarded.\n\t'DEF-foot.L' has scale animation that will be discarded.\n\t'DEF-toe.L'
-      has scale animation that will be discarded.\n\t'DEF-thigh.R' has scale animation
-      that will be discarded.\n\t'DEF-shin.R' has scale animation that will be discarded.\n\t'DEF-foot.R'
-      has scale animation that will be discarded.\n\t'DEF-toe.R' has scale animation
+      that will be discarded.\n\t'DEF-foot.L' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
       that will be discarded.\n\nClip 'rig|Get_Damage_Front' has import animation
       warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'DEF-spine.004' is inbetween
       humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-upper_arm.L'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-upper_arm.R'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-thigh.L'
-      has scale animation that will be discarded.\n\t'DEF-shin.L' has scale animation
-      that will be discarded.\n\t'DEF-foot.L' has scale animation that will be discarded.\n\t'DEF-thigh.R'
-      has scale animation that will be discarded.\n\t'DEF-shin.R' has scale animation
-      that will be discarded.\n\t'DEF-foot.R' has scale animation that will be discarded.\n\t'DEF-toe.R'
-      has scale animation that will be discarded.\n\nClip 'rig|Jump' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'DEF-upper_arm.L' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-upper_arm.R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'rig|Jump' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'DEF-upper_arm.L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-upper_arm.R'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'DEF-thigh.L'
       has scale animation that will be discarded.\n\t'DEF-shin.L' has scale animation
       that will be discarded.\n\t'DEF-foot.L' has scale animation that will be discarded.\n\t'DEF-toe.L'
@@ -432,7 +425,7 @@ ModelImporter:
       takeName: rig|Get_Damage_Back
       internalID: 0
       firstFrame: 0
-      lastFrame: 4
+      lastFrame: 8
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -461,7 +454,7 @@ ModelImporter:
       takeName: rig|Get_Damage_Front
       internalID: 0
       firstFrame: 0
-      lastFrame: 4
+      lastFrame: 8
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

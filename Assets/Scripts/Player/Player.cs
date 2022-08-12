@@ -52,6 +52,8 @@ namespace Com.NikfortGames.MyGame {
         #region Private Fields
         private Animator animator;
 
+        [SerializeField] private AnimationClip getDamageAC;
+
         #endregion
 
 
@@ -65,7 +67,6 @@ namespace Com.NikfortGames.MyGame {
             currentMana = maxMana;
             animator = GetComponentInChildren<Animator>();
         }
-
   
         /// <summary> 
         /// Player gets damage
@@ -125,18 +126,21 @@ namespace Com.NikfortGames.MyGame {
             float angle = Helpers.GetXZAngle(bulletDir, transform.forward);
             animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 2);
             if(angle <= 90) {
-                animator.SetTrigger("get_damage_back");
+                animator.SetBool("get_damage_back", true);
             } else{
-                animator.SetTrigger("get_damage_front");
+                animator.SetBool("get_damage_front", true);
             }
             GetComponent<Attack>().ResetCasting();
+            Invoke("ReturnAnimation", getDamageAC.length);
+        }
+
+        void ReturnAnimation() {
+            animator.SetBool("get_damage_back", false);
+            animator.SetBool("get_damage_front", false);
+            animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 0);
         }
 
         #endregion
-
-
-
-
 
     }
 

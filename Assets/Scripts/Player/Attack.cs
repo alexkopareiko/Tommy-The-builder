@@ -69,7 +69,7 @@ namespace Com.NikfortGames.MyGame {
         public Image abilityImage2;
         public float coolDown2 = 5;
         public bool isCoolDown2 = false;
-        
+
         [Tooltip("No need initialize")]
         public KeyCode keyCode2;
 
@@ -317,7 +317,7 @@ namespace Com.NikfortGames.MyGame {
                 animator.SetBool("isCasting", isCasting);
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 0);
-                // animator.SetLayerWeight(animator.GetLayerIndex("Get Damage"), 0);
+                
                 timeToFire = 0;
                 attackNumber = 0;
                 if(spellProgress != null) {
