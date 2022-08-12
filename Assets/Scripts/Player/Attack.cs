@@ -54,15 +54,23 @@ namespace Com.NikfortGames.MyGame {
         public SpellProgress spellProgressPrefab;
 
         [Header("Staff Attack Spell")]
+
+        [Tooltip("No need initialize")]
         public Image abilityImage1;
         public float coolDown1 = 1;
         public bool isCoolDown1 = false;
+
+        [Tooltip("No need initialize")]
         public KeyCode keyCode1;
 
         [Header("Spear Spell")]
+
+        [Tooltip("No need initialize")]
         public Image abilityImage2;
         public float coolDown2 = 5;
         public bool isCoolDown2 = false;
+        
+        [Tooltip("No need initialize")]
         public KeyCode keyCode2;
 
 
@@ -166,7 +174,10 @@ namespace Com.NikfortGames.MyGame {
             /// </summary>
             if(Input.GetKeyDown(keyCode1) && ableToAttack && !isCoolDown1) {
                 Player _target = GetComponent<Focus>().focus;
-                if(_target == null) return;
+                if(_target == null) {
+                    GetComponent<InstantiateUI>().ShowMessage("No target selected.");
+                    return;
+                }
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 1);
                 attackNumber = STAFF_ATTACK;
                 currentSpell = StaffAttack(attackStaff.length);
@@ -177,7 +188,10 @@ namespace Com.NikfortGames.MyGame {
             /// </summary>
             if(Input.GetKeyDown(keyCode2) && notMoving && ableToAttack && !isCoolDown2) {
                 Player _target = GetComponent<Focus>().focus;
-                if(_target == null) return;
+                if(_target == null) {
+                    GetComponent<InstantiateUI>().ShowMessage("No target selected.");
+                    return;
+                }
                 Spell spell = vfx[0].GetComponent<Spell>();
                 timeToFire = Time.time + spell.castingTime;
                 if(player.currentMana >= spell.manaCost) {
@@ -209,6 +223,8 @@ namespace Com.NikfortGames.MyGame {
                     transform.forward = IsAbleToAttack(target);
                     player.SpendMana(spell.manaCost);
                     photonView.RPC("ThrowSpell", RpcTarget.AllViaServer, 0);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("No target selected.\nOut of angle range.");
                 }
                 resetCasting = true;
             } else {

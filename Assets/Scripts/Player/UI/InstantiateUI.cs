@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 using Photon.Pun;
 
@@ -18,6 +19,9 @@ namespace Com.NikfortGames.MyGame {
         [SerializeField]
         private GameObject playerUiBottomPanelPrefab;
 
+        [SerializeField]
+        private GameObject playerUiMessageToPlayerPrefab;
+
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -31,7 +35,7 @@ namespace Com.NikfortGames.MyGame {
                     _uiGo.SendMessage("SetTarget", player, SendMessageOptions.RequireReceiver);
                 } else
                 {
-                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on player Prefab.", this);
+                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUilabelPrefab reference on InstantiateUI .", this);
                 }
             }
             else {
@@ -41,7 +45,7 @@ namespace Com.NikfortGames.MyGame {
                     _uiGo.SendMessage("SetTarget", player, SendMessageOptions.RequireReceiver);
                 } else
                 {
-                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiTopLeftPrefab reference on player Prefab.", this);
+                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiTopLeftPrefab reference on InstantiateUI.", this);
                 }
 
                 if (playerUiBottomPanelPrefab != null)
@@ -51,9 +55,30 @@ namespace Com.NikfortGames.MyGame {
                     GetComponent<Attack>().FindAndInitializeSpells(spellSlots);
                 } else
                 {
-                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiBottomPanelPrefab reference on player Prefab.", this);
+                    Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiBottomPanelPrefab reference on InstantiateUI.", this);
                 }
             }    
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void ShowMessage(string message) {
+            if(playerUiMessageToPlayerPrefab != null) {
+                PlayerUIMessageToPlayer[] _uis = FindObjectsOfType<PlayerUIMessageToPlayer>();
+                if(_uis.Length > 0) {
+                    foreach (var ui in _uis)
+                    {
+                        Destroy(ui.gameObject);
+                    }
+                }
+                GameObject _uiGo = Instantiate(playerUiMessageToPlayerPrefab);
+                _uiGo.GetComponent<PlayerUIMessageToPlayer>().SetText(message);
+            }
+            else {
+                Debug.LogWarning("<Color=Red><b>Missing</b></Color> playerUiMessageToPlayerPrefab reference on InstantiateUI.", this);
+            }
         }
 
         #endregion

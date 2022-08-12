@@ -234,7 +234,7 @@ MonoBehaviour:
   isCasting: 0
   spellProgressPrefab: {fileID: 639062733, guid: e576459f212ebeb479e9208fc42940fd, type: 3}
   abilityImage1: {fileID: 0}
-  coolDown1: 5
+  coolDown1: 1
   isCoolDown1: 0
   keyCode1: 0
   abilityImage2: {fileID: 0}
@@ -274,6 +274,7 @@ MonoBehaviour:
   playerUiLabelPrefab: {fileID: 1771648032592541201, guid: 91a7fab31c90f384887a1ccf6a861e91, type: 3}
   playerUiTopLeftPrefab: {fileID: 5058009877376357399, guid: 7fa72709b3dbb994bb5eafd176e34fa1, type: 3}
   playerUiBottomPanelPrefab: {fileID: 2334285966228208785, guid: 9cb31ce893e93f54f8108b536395383b, type: 3}
+  playerUiMessageToPlayerPrefab: {fileID: 7938443392134611017, guid: ee79d550b17353a46bd2fa5a676d20c5, type: 3}
 --- !u!114 &1548536922540450729
 MonoBehaviour:
   m_ObjectHideFlags: 0
