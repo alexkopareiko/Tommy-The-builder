@@ -73,6 +73,16 @@ namespace Com.NikfortGames.MyGame {
         [Tooltip("No need initialize")]
         public KeyCode keyCode2;
 
+        [Header("Heal Spell")]
+
+        [Tooltip("No need initialize")]
+        public Image abilityImage3;
+        public float coolDown3 = 5;
+        public bool isCoolDown3 = false;
+
+        [Tooltip("No need initialize")]
+        public KeyCode keyCode3;
+
 
 
         #endregion

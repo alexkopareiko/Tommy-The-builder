@@ -44,13 +44,16 @@ namespace Com.NikfortGames.MyGame {
         public int currentHealth;
         public int maxMana = 100;
         public int currentMana;
- 
         public int ownerId;
+
+        public float delayManaInc = 1f;
 
         #endregion
 
         #region Private Fields
         private Animator animator;
+
+        protected float timer;
 
         [SerializeField] private AnimationClip getDamageAC;
 
@@ -71,6 +74,7 @@ namespace Com.NikfortGames.MyGame {
         private void Update() {
             if(photonView.IsMine) {
                 CheckIfDeadAndReAssign();
+                ManaIncrement();
             }
         }
   
@@ -119,6 +123,16 @@ namespace Com.NikfortGames.MyGame {
 
 
         #region Private Methods
+
+        void ManaIncrement(){
+            timer += Time.deltaTime;
+            if (timer >= delayManaInc)
+            {
+                timer = 0f;
+                currentMana++;
+                if(currentMana > maxMana) currentMana = maxMana;
+            }
+        }
 
         void Die() {
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
