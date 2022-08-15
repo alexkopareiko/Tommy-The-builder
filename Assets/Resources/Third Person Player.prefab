@@ -176,6 +176,7 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   ownerId: 0
+  delayManaInc: 1
   getDamageAC: {fileID: 216680861713525821, guid: b585e2467dd570541844e46abf3023c6, type: 3}
 --- !u!114 &2599562869596931382
 MonoBehaviour:
@@ -242,6 +243,10 @@ MonoBehaviour:
   coolDown2: 1
   isCoolDown2: 0
   keyCode2: 0
+  abilityImage3: {fileID: 0}
+  coolDown3: 5
+  isCoolDown3: 0
+  keyCode3: 0
 --- !u!114 &5126312449433750530
 MonoBehaviour:
   m_ObjectHideFlags: 0
