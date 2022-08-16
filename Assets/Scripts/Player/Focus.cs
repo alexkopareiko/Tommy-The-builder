@@ -40,6 +40,7 @@ namespace Com.NikfortGames.MyGame {
         public GameObject playerUITopFocusPrefab;
         
         public int EMPTY_FOCUS = -1;
+
         #endregion
 
         #region Private Fields
@@ -55,7 +56,7 @@ namespace Com.NikfortGames.MyGame {
             if(photonView.IsMine) {
                 // Debug.LogError(GetComponent<Player>().ownerId);
                 InteractWith();
-                SetCirclePosition();
+                GameManager.instance.SetCircleSelection(focus);
                 DeFocusOnDistance();               
             } 
         }
@@ -84,14 +85,6 @@ namespace Com.NikfortGames.MyGame {
             if(focus == null) return;
             float dist = Vector3.Distance(focus.transform.position, Camera.main.transform.position);
             if(dist >= focusDistance) focus = null;
-        }
-
-        void SetCirclePosition() {
-            if(focus) {
-                matOfTerrainWithCircleShader.SetVector("_Center", new Vector4(focus.transform.position.x, focus.transform.position.y, focus.transform.position.z, 0f));
-            } else {
-                matOfTerrainWithCircleShader.SetVector("_Center", new Vector4(10000, 10000, 10000, 0f));
-            }
         }
 
         void InteractWith() {

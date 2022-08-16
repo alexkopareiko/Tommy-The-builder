@@ -153,11 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2599562869596931372, guid: 8c2f5290f348379458697f999d70970a, type: 3}
-  minX: -55
-  maxX: -55
-  minZ: -55
-  maxZ: -55
-  y: 6.5
 --- !u!4 &65496324
 Transform:
   m_ObjectHideFlags: 0
@@ -226,7 +221,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.697417, y: 1}
+    m_SensorSize: {x: 1.026455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -715,6 +710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
+  - component: {fileID: 705507996}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -799,6 +795,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &705507996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &792598942
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +884,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.697417, y: 1}
+    m_SensorSize: {x: 1.026455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1023,6 +1039,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1130,6 +1147,39 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &976278923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c347e8a2cff2134996c9d6528d80215, type: 3}
@@ -1225,6 +1275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7c6f579749b6e459a7de0804133ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleSelectVector3: {x: 0, y: -1.46, z: 0}
+  circleSelectPrefab: {fileID: -2324057834063345856, guid: 2f562d9a519fce040abb6188ad4bcdc7, type: 3}
 --- !u!4 &1239266427
 Transform:
   m_ObjectHideFlags: 0
@@ -1629,7 +1681,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.697417, y: 1}
+    m_SensorSize: {x: 1.026455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1707,7 +1759,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.697417, y: 1}
+    m_SensorSize: {x: 1.026455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1814,7 +1866,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 6c347e8a2cff2134996c9d6528d80215, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4acf9d1c868dedc4092faaaa030bd221, type: 2}
+      objectReference: {fileID: 2100000, guid: 77a7a07dfb1b49c4cbcbc2dd809d3e6d, type: 2}
     - target: {fileID: -7511558181221131132, guid: 6c347e8a2cff2134996c9d6528d80215, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -2245,6 +2297,10 @@ MonoBehaviour:
   coolDown2: 1
   isCoolDown2: 0
   keyCode2: 0
+  abilityImage3: {fileID: 0}
+  coolDown3: 5
+  isCoolDown3: 0
+  keyCode3: 0
 --- !u!114 &1884243389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2288,6 +2344,8 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   ownerId: 0
+  delayManaInc: 1
+  getDamageAC: {fileID: 0}
 --- !u!82 &1884243391
 AudioSource:
   m_ObjectHideFlags: 0

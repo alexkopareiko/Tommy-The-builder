@@ -10,10 +10,19 @@ namespace Com.NikfortGames.MyGame {
 
         public static GameManager instance;
 
+        [Header("Circle Selection")]
+        [Tooltip("lower down the selection for correct texture drawing")]
+        [SerializeField] 
+        public  Vector3 circleSelectVector3 = new Vector3(0f, -1.2f, 0f);
+        public  CharacterSelection circleSelectPrefab;
+
         #endregion
         
         #region Private Fields
         private Player player;
+
+        private  CharacterSelection circleSelect;
+
         
         #endregion
 
@@ -27,6 +36,27 @@ namespace Com.NikfortGames.MyGame {
         void Start()
         {
             player = FindObjectOfType<Player>();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void SetCircleSelection(Player focus) {
+            if(focus) {
+                if(circleSelect == null ) {
+                    if(circleSelectPrefab == null) {
+                        Debug.LogWarning("<Color=Red><b>Missing</b></Color> circleSelectPrefab reference on GameManager.");
+                        return;
+                    }
+                    circleSelect = Instantiate(circleSelectPrefab);
+                }
+                if(!circleSelect.gameObject.activeSelf) circleSelect.gameObject.SetActive(true);
+                Vector3 pos = focus.transform.position + circleSelectVector3;
+                circleSelect.transform.position = pos;
+            } else if(circleSelect != null){
+                circleSelect.gameObject.SetActive(false);
+            }
         }
 
         #endregion
