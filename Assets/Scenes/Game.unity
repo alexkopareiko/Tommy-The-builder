@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 617d9be015db68348a623b01ea51a8c5, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 77715b8b6b248994891d3ccad1ad330b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.47886068, g: 0.8001851, b: 0.89945406, a: 1}
+  m_IndirectSpecularColor: {r: 0.44601268, g: 0.62494797, b: 0.7225996, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -221,7 +221,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.026455, y: 1}
+    m_SensorSize: {x: 0.826455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.026455, y: 1}
+    m_SensorSize: {x: 0.826455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1681,7 +1681,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.026455, y: 1}
+    m_SensorSize: {x: 0.826455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1759,7 +1759,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.026455, y: 1}
+    m_SensorSize: {x: 0.826455, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2274,33 +2274,31 @@ MonoBehaviour:
   firepoint: {fileID: 403278166}
   LeftHandPoint: {fileID: 0}
   staffHitPoint: {fileID: 0}
-  attackDamageStaff: 5
-  attackDamageSpear: 20
-  attackDamageFireball: 40
-  staffAttackLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  staffAttackPointSize: {x: 0, y: 0, z: 0}
-  vfx:
-  - {fileID: 9186516990293965276, guid: 1e1046652a6b7b7488408ae9002760ee, type: 3}
-  attackFireball: {fileID: 0}
-  attackShield: {fileID: 0}
-  attackSpear: {fileID: 0}
-  attackStaff: {fileID: 0}
   isCasting: 0
   spellProgressPrefab: {fileID: 0}
   abilityImage1: {fileID: 0}
   coolDown1: 5
   isCoolDown1: 0
   keyCode1: 0
+  attackDamageStaff: 5
+  staffAttackLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  staffAttackPointSize: {x: 0, y: 0, z: 0}
+  attackStaff: {fileID: 0}
   abilityImage2: {fileID: 0}
   coolDown2: 1
   isCoolDown2: 0
   keyCode2: 0
+  attackDamageSpear: 20
+  vfxSpearSpell: {fileID: 0}
   abilityImage3: {fileID: 0}
   coolDown3: 5
   isCoolDown3: 0
   keyCode3: 0
+  vfxHealSpell: {fileID: 0}
+  castingTime3: 0
+  manaCost3: 30
 --- !u!114 &1884243389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2484,3 +2482,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5124756129594994896, guid: b585e2467dd570541844e46abf3023c6, type: 3}
   m_PrefabInstance: {fileID: 1768445332}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1848746791026456725
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1110055
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.771311
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.12207842
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000011920926
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000029373664
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000030224893
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230755215047744249, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_Name
+      value: vfx_GreenDot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}

@@ -35,53 +35,47 @@ namespace Com.NikfortGames.MyGame {
         public GameObject firepoint;
         public GameObject LeftHandPoint;
         public GameObject staffHitPoint;
-        public int attackDamageStaff = 5;
-        public int attackDamageSpear = 20;
-        public int attackDamageFireball = 40;
-        public LayerMask staffAttackLayerMask;
-        public Vector3 staffAttackPointSize;
-        public List<GameObject> vfx = new List<GameObject> ();
-
-        #region AnimationClips
-        public AnimationClip attackFireball;
-        public AnimationClip attackShield;
-        public AnimationClip attackSpear;
-        public AnimationClip attackStaff;
-        #endregion
-
         public bool isCasting = false;
         public IEnumerator currentSpell;
         public SpellProgress spellProgressPrefab;
 
-        [Header("Staff Attack Spell")]
 
+
+        [Header("Staff Attack Spell")]
         [Tooltip("No need initialize")]
         public Image abilityImage1;
         public float coolDown1 = 1;
         public bool isCoolDown1 = false;
-
         [Tooltip("No need initialize")]
         public KeyCode keyCode1;
+        public int attackDamageStaff = 5;
+        public LayerMask staffAttackLayerMask;
+        public Vector3 staffAttackPointSize;
+        public AnimationClip attackStaff;
+
 
         [Header("Spear Spell")]
-
         [Tooltip("No need initialize")]
         public Image abilityImage2;
         public float coolDown2 = 5;
         public bool isCoolDown2 = false;
-
         [Tooltip("No need initialize")]
         public KeyCode keyCode2;
+        public int attackDamageSpear = 20;
+        public GameObject vfxSpearSpell;
+
+
 
         [Header("Heal Spell")]
-
         [Tooltip("No need initialize")]
         public Image abilityImage3;
         public float coolDown3 = 5;
         public bool isCoolDown3 = false;
-
         [Tooltip("No need initialize")]
         public KeyCode keyCode3;
+        public GameObject vfxHealSpell;
+        public float castingTime3;
+        public int manaCost3 = 30;
 
 
 
@@ -103,7 +97,7 @@ namespace Com.NikfortGames.MyGame {
         private SpellProgress spellProgress;
 
         int SPEAR_ATTACK = 1;
-        // int FIREBALL_ATTACK = 2;
+        int HEAL_SPELL = 2;
         // int SHIELD_ATTACK = 3;
         int STAFF_ATTACK = 4;
 
@@ -128,6 +122,7 @@ namespace Com.NikfortGames.MyGame {
                 AttackFunc();
                 RunCoolDowns();
             }
+            VFXSpellCheck();
             if(resetCasting) {
                 ResetCasting();
             }
@@ -166,6 +161,13 @@ namespace Com.NikfortGames.MyGame {
                     isCoolDown2 = false;
                 }
             }
+            if(isCoolDown3) {
+                abilityImage3.fillAmount -= 1 / coolDown3 * Time.deltaTime;
+                if(abilityImage3.fillAmount <= 0) {
+                    abilityImage3.fillAmount = 0;
+                    isCoolDown3 = false;
+                }
+            }
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Com.NikfortGames.MyGame {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.");
                     return;
                 }
-                Spell spell = vfx[0].GetComponent<Spell>();
+                Spell spell = vfxSpearSpell.GetComponent<Spell>();
                 timeToFire = Time.time + spell.castingTime;
                 if(player.currentMana >= spell.manaCost) {
                     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
@@ -216,9 +218,29 @@ namespace Com.NikfortGames.MyGame {
                     GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
             }
+            /// <summary>
+            /// Heal Spell
+            /// </summary>
+            if(Input.GetKeyDown(keyCode3) && notMoving && ableToAttack && !isCoolDown3) {
+                if(player.currentMana >= manaCost3) {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
+                    attackNumber = HEAL_SPELL;
+                    animator.SetInteger("attack_num", attackNumber);
+                    isCasting = true;
+                    animator.SetBool("isCasting", isCasting);
+                    currentSpell = HealSpell();
+                    StartCoroutine(currentSpell);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
+                }
+            }
             if(!notMoving) {
                 resetCasting = true;
             }
+        }
+
+        void VFXSpellCheck() {
+            vfxHealSpell.SetActive(attackNumber == HEAL_SPELL);
         }
 
         /// <summary>
@@ -234,9 +256,30 @@ namespace Com.NikfortGames.MyGame {
                     abilityImage2.fillAmount = 1;
                     transform.forward = IsAbleToAttack(target);
                     player.SpendMana(spell.manaCost);
-                    photonView.RPC("ThrowSpell", RpcTarget.AllViaServer, 0);
+                    photonView.RPC("ThrowSpearSpell", RpcTarget.AllViaServer);
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.\nOut of angle range.");
+                }
+                resetCasting = true;
+            } else {
+                Debug.Log("No Fire Point for Spear Attack");
+            }
+        }
+
+        /// <summary>
+        /// Heal Spell
+        /// </summary>
+        IEnumerator HealSpell() {
+            SpellProgressIntantiate(castingTime3);
+            yield return new WaitForSeconds(castingTime3);
+            if(!resetCasting) {
+                if(!isCoolDown3 ) {
+                    isCoolDown3 = true;
+                    abilityImage3.fillAmount = 1;
+                    player.SpendMana(manaCost3);
+                    player.Heal(manaCost3);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("Cooldown is not over");
                 }
                 resetCasting = true;
             } else {
@@ -264,9 +307,9 @@ namespace Com.NikfortGames.MyGame {
         /// Photon RPC Spear Spell
         /// </summary>
         [PunRPC]
-        void ThrowSpell(int _vfxIndex){
+        void ThrowSpearSpell(){
             Player target = GetComponent<Focus>().focus;
-            Spell projectile = vfx[_vfxIndex].GetComponent<Spell>();
+            Spell projectile = vfxSpearSpell.GetComponent<Spell>();
             if(photonView.IsMine)  {
                 if(target != null) {
                     Spell _projectile = Instantiate(projectile, firepoint.transform.position, player.transform.rotation);
@@ -296,17 +339,6 @@ namespace Com.NikfortGames.MyGame {
             abilityImage1.fillAmount = 1;
             resetCasting = true;
         }
-
-        // void FireballAttack() {
-        //     if(LeftHandPoint != null) {
-        //         if(ableToAttack) {
-        //             Instantiate(vfx[1], LeftHandPoint.transform.position, player.transform.rotation);
-        //         }
-        //     } else {
-        //         Debug.Log("No Fire Point"); 
-        //     }
-        //     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
-        // }
 
         void OnDrawGizmosSelected() {
             if(staffHitPoint != null) {
@@ -353,11 +385,15 @@ namespace Com.NikfortGames.MyGame {
                     } else if(i == 1) {
                         abilityImage2 = slot.disabledIcon.GetComponent<Image>();
                         keyCode2 = slot.spellIcon.keyCode;
+                    } else if(i == 2) {
+                        abilityImage3 = slot.disabledIcon.GetComponent<Image>();
+                        keyCode3 = slot.spellIcon.keyCode;
                     }
                     i++;
                 }
                 abilityImage1.fillAmount = 0;
                 abilityImage2.fillAmount = 0;
+                abilityImage3.fillAmount = 0;
             } else {
                 Debug.LogError("Missed <Color=Red>spellSlots</Color> in FindAndInitializeSpells method");
             }

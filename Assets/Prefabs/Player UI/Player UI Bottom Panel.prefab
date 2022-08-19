@@ -160,8 +160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37177e4921f720429d9267300e41bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spellSlots: []
   spellSlotPreafb: {fileID: 2714318056251650429, guid: 73c64a0ffba43ed4d855b7cf0d7891d1, type: 3}
   spellIcons:
   - {fileID: 11400000, guid: f05e9c10d14799542a6bfe8e6b8f3a6b, type: 2}
   - {fileID: 11400000, guid: dd914d73cc018eb4d9ef65a2c8de7b9e, type: 2}
+  - {fileID: 11400000, guid: d3e9fecc845508747b1c7a89e55b9728, type: 2}
   itemsParent: {fileID: 2334285964448555973}

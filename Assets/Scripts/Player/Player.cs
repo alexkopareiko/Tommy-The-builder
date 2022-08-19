@@ -93,10 +93,6 @@ namespace Com.NikfortGames.MyGame {
                 int damage = GetComponent<Attack>().attackDamageSpear;
                 TakeDamage(damage);
                 PlayerHitAnimation(other.transform.forward);
-            } else if(other.CompareTag("FireballSpell")) {
-                int damage = GetComponent<Attack>().attackDamageFireball;
-                TakeDamage(damage);
-                PlayerHitAnimation(other.transform.forward);
             }
             
         }
@@ -105,6 +101,11 @@ namespace Com.NikfortGames.MyGame {
 
 
         #region Public Methods
+
+        public void Heal(int health) {
+            currentHealth += health;
+            if(currentHealth > maxHealth) currentHealth = maxHealth;
+        }
 
         public void TakeDamage(int damage){
             if(currentHealth > 0) {
