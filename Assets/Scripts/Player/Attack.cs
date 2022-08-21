@@ -185,6 +185,7 @@ namespace Com.NikfortGames.MyGame {
             /// Staff Kick
             /// </summary>
             if(Input.GetKeyDown(keyCode1) && ableToAttack && !isCoolDown1) {
+                Debug.Log("Hit with staff");
                 Player _target = GetComponent<Focus>().focus;
                 if(_target == null) {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.");
@@ -234,7 +235,7 @@ namespace Com.NikfortGames.MyGame {
                     GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
             }
-            if(!notMoving) {
+            if(!notMoving && attackNumber != STAFF_ATTACK) {
                 resetCasting = true;
             }
         }
