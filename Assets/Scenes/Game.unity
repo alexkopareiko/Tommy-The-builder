@@ -221,7 +221,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.826455, y: 1}
+    m_SensorSize: {x: 0.8962963, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.826455, y: 1}
+    m_SensorSize: {x: 0.8962963, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1681,7 +1681,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.826455, y: 1}
+    m_SensorSize: {x: 0.8962963, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1759,7 +1759,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.826455, y: 1}
+    m_SensorSize: {x: 0.8962963, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2489,6 +2489,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 789462308518455029, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1337290431592045027, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -2536,6 +2540,10 @@ PrefabInstance:
     - target: {fileID: 2230755215047744249, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
       propertyPath: m_Name
       value: vfx_GreenDot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230755215047744249, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff5e0ae2789c7c64798c53284a3b8718, type: 3}
