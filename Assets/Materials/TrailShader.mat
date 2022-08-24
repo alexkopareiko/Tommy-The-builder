@@ -22,14 +22,18 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: TrailShader
   m_Shader: {fileID: -6465566751694194690, guid: 31c7500955897774c8da94e717f5e80d, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_ValidKeywords:
+  - _ALPHATEST_ON
+  m_InvalidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -55,11 +59,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha_Clip: 0.5
+    - _AlphaClip: 1
+    - _Alpha_Clip: 1
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Simple_Noise: 50
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - _Color1: {r: 0.0266664, g: 1, b: 0, a: 0}
-    - _Color2: {r: 0, g: 1, b: 0.9388056, a: 0}
+    - _Color1: {r: 1, g: 0.6938923, b: 0, a: 0}
+    - _Color2: {r: 0.754717, g: 0.14153753, b: 0, a: 0}
   m_BuildTextureStacks: []

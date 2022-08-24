@@ -84,7 +84,10 @@ namespace Com.NikfortGames.MyGame {
         void DeFocusOnDistance(){
             if(focus == null) return;
             float dist = Vector3.Distance(focus.transform.position, Camera.main.transform.position);
-            if(dist >= focusDistance) focus = null;
+            if(dist >= focusDistance) {
+                focus = null;
+                SetPlayerUITopFocus();
+            }
         }
 
         void InteractWith() {

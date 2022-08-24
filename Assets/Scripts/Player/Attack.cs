@@ -63,6 +63,7 @@ namespace Com.NikfortGames.MyGame {
         public KeyCode keyCode2;
         public int attackDamageSpear = 20;
         public GameObject vfxSpearSpell;
+        public GameObject vfxSpearSpellPrepare;
 
 
 
@@ -242,6 +243,7 @@ namespace Com.NikfortGames.MyGame {
 
         void VFXSpellCheck() {
             vfxHealSpell.SetActive(attackNumber == HEAL_SPELL);
+            vfxSpearSpellPrepare.SetActive(attackNumber == SPEAR_ATTACK);
         }
 
         /// <summary>
