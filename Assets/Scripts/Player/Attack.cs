@@ -78,6 +78,18 @@ namespace Com.NikfortGames.MyGame {
         public float castingTime3;
         public int manaCost3 = 30;
 
+        [Header("Teleport Spell")]
+        [Tooltip("No need initialize")]
+        public Image abilityImage4;
+        public float coolDown4 = 5;
+        public bool isCoolDown4 = false;
+        [Tooltip("No need initialize")]
+        public KeyCode keyCode4;
+        public GameObject vfxTeleportSpell;
+        public float castingTime4 = 0.5f;
+        public int manaCost4 = 30;
+        public float distanceToTeleport = 30f;
+
 
 
         #endregion
@@ -169,6 +181,13 @@ namespace Com.NikfortGames.MyGame {
                     isCoolDown3 = false;
                 }
             }
+            if(isCoolDown4) {
+                abilityImage4.fillAmount -= 1 / coolDown4 * Time.deltaTime;
+                if(abilityImage4.fillAmount <= 0) {
+                    abilityImage4.fillAmount = 0;
+                    isCoolDown4 = false;
+                }
+            }
         }
 
         /// <summary>
@@ -236,6 +255,19 @@ namespace Com.NikfortGames.MyGame {
                     GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
             }
+            /// <summary>
+            /// Teleport Spell
+            /// </summary>
+            if(Input.GetKeyDown(keyCode4) && notMoving && ableToAttack && !isCoolDown4) {
+                if(player.currentMana >= manaCost4) {
+                    isCasting = true;
+                    animator.SetBool("isCasting", isCasting);
+                    currentSpell = TeleportSpell();
+                    StartCoroutine(currentSpell);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
+                }
+            }
             if(!notMoving && attackNumber != STAFF_ATTACK) {
                 resetCasting = true;
             }
@@ -281,6 +313,34 @@ namespace Com.NikfortGames.MyGame {
                     abilityImage3.fillAmount = 1;
                     player.SpendMana(manaCost3);
                     player.Heal(manaCost3);
+                } else {
+                    GetComponent<InstantiateUI>().ShowMessage("Cooldown is not over");
+                }
+                resetCasting = true;
+            } else {
+                Debug.Log("No Fire Point for Spear Attack");
+            }
+        }
+
+        /// <summary>
+        /// Teleport Spell
+        /// </summary>
+        IEnumerator TeleportSpell() {
+            SpellProgressIntantiate(castingTime4);
+            yield return new WaitForSeconds(castingTime4);
+            if(!resetCasting) {
+                if(!isCoolDown4 ) {
+                    isCoolDown4 = true;
+                    abilityImage4.fillAmount = 1;
+                    player.SpendMana(manaCost4);
+                    RaycastHit hit;
+                    if (Physics.Raycast(thirdPersonMovement.transform.position, transform.forward, out hit, distanceToTeleport))
+                    {
+                        transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z); 
+                    }
+                    else {
+                        transform.position = transform.forward * distanceToTeleport; 
+                    }
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("Cooldown is not over");
                 }
@@ -391,12 +451,16 @@ namespace Com.NikfortGames.MyGame {
                     } else if(i == 2) {
                         abilityImage3 = slot.disabledIcon.GetComponent<Image>();
                         keyCode3 = slot.spellIcon.keyCode;
+                    } else if(i == 3) {
+                        abilityImage4 = slot.disabledIcon.GetComponent<Image>();
+                        keyCode4 = slot.spellIcon.keyCode;
                     }
                     i++;
                 }
                 abilityImage1.fillAmount = 0;
                 abilityImage2.fillAmount = 0;
                 abilityImage3.fillAmount = 0;
+                abilityImage4.fillAmount = 0;
             } else {
                 Debug.LogError("Missed <Color=Red>spellSlots</Color> in FindAndInitializeSpells method");
             }

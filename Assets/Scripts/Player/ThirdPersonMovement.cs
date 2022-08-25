@@ -103,6 +103,10 @@ namespace Com.NikfortGames.MyGame {
         }
 
         #endregion
+
+        #region Public Fields
+
+        #endregion
         
     }
 

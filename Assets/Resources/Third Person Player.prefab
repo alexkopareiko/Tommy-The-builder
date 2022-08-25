@@ -344,6 +344,14 @@ MonoBehaviour:
   vfxHealSpell: {fileID: 7480141317558174077}
   castingTime3: 10
   manaCost3: 30
+  abilityImage4: {fileID: 0}
+  coolDown4: 0.5
+  isCoolDown4: 0
+  keyCode4: 0
+  vfxTeleportSpell: {fileID: 0}
+  castingTime4: 0.5
+  manaCost4: 30
+  distanceToTeleport: 30
 --- !u!114 &5126312449433750530
 MonoBehaviour:
   m_ObjectHideFlags: 0
