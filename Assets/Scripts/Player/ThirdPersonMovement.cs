@@ -24,6 +24,8 @@ namespace Com.NikfortGames.MyGame {
         public Transform cameraLookHere;
         public PhotonView photonView;
 
+        public bool disabledMovement = false;
+
         #endregion
 
         
@@ -50,6 +52,7 @@ namespace Com.NikfortGames.MyGame {
         }
 
         private void Update() {
+            if(disabledMovement) return;
             if(player.currentHealth > 0) {
                 if(!controller.enabled) controller.enabled = true;
                 if(photonView.IsMine) Move();
@@ -105,6 +108,13 @@ namespace Com.NikfortGames.MyGame {
         #endregion
 
         #region Public Fields
+
+        public IEnumerator TeleportMe(Vector3 _teleportTo) {
+            disabledMovement = true;
+            yield return new WaitForSeconds(0.1f);
+            transform.position = _teleportTo;
+            disabledMovement = false;
+        }
 
         #endregion
         

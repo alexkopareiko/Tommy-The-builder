@@ -303,6 +303,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   cameraLookHere: {fileID: 2599562870536047713}
   photonView: {fileID: 0}
+  disabledMovement: 0
 --- !u!114 &2599562869596931380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,8 +321,8 @@ MonoBehaviour:
   staffHitPoint: {fileID: 6455575974764567336}
   isCasting: 0
   spellProgressPrefab: {fileID: 639062733, guid: e576459f212ebeb479e9208fc42940fd, type: 3}
-  abilityImage1: {fileID: 0}
   coolDown1: 1
+  abilityImage1: {fileID: 0}
   isCoolDown1: 0
   keyCode1: 0
   attackDamageStaff: 5
@@ -330,27 +331,28 @@ MonoBehaviour:
     m_Bits: 64
   staffAttackPointSize: {x: 3, y: 3, z: 2}
   attackStaff: {fileID: 6233698504422847411, guid: b585e2467dd570541844e46abf3023c6, type: 3}
-  abilityImage2: {fileID: 0}
   coolDown2: 1
+  abilityImage2: {fileID: 0}
   isCoolDown2: 0
   keyCode2: 0
   attackDamageSpear: 20
   vfxSpearSpell: {fileID: 5648520716043331792, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
   vfxSpearSpellPrepare: {fileID: 8343953519659716985}
-  abilityImage3: {fileID: 0}
   coolDown3: 20
+  abilityImage3: {fileID: 0}
   isCoolDown3: 0
   keyCode3: 0
   vfxHealSpell: {fileID: 7480141317558174077}
   castingTime3: 10
   manaCost3: 30
-  abilityImage4: {fileID: 0}
   coolDown4: 0.5
+  abilityImage4: {fileID: 0}
   isCoolDown4: 0
   keyCode4: 0
-  vfxTeleportSpell: {fileID: 0}
-  castingTime4: 0.5
-  manaCost4: 30
+  vfxTeleportSpellPrefab: {fileID: 602529902965989282, guid: a06fc7c66fbc5cb4d9eccad4be0caad1, type: 3}
+  vfxTeleportSpell: {fileID: 602529902965989282, guid: a06fc7c66fbc5cb4d9eccad4be0caad1, type: 3}
+  castingTime4: 0.25
+  manaCost4: 1
   distanceToTeleport: 30
 --- !u!114 &5126312449433750530
 MonoBehaviour:

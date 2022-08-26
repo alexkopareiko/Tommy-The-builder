@@ -42,11 +42,11 @@ namespace Com.NikfortGames.MyGame {
 
 
         [Header("Staff Attack Spell")]
-        [Tooltip("No need initialize")]
-        public Image abilityImage1;
         public float coolDown1 = 1;
+        [HideInInspector]
+        public Image abilityImage1;
         public bool isCoolDown1 = false;
-        [Tooltip("No need initialize")]
+        [HideInInspector]
         public KeyCode keyCode1;
         public int attackDamageStaff = 5;
         public LayerMask staffAttackLayerMask;
@@ -55,11 +55,11 @@ namespace Com.NikfortGames.MyGame {
 
 
         [Header("Spear Spell")]
-        [Tooltip("No need initialize")]
-        public Image abilityImage2;
         public float coolDown2 = 5;
+        [HideInInspector]
+        public Image abilityImage2;
         public bool isCoolDown2 = false;
-        [Tooltip("No need initialize")]
+        [HideInInspector]
         public KeyCode keyCode2;
         public int attackDamageSpear = 20;
         public GameObject vfxSpearSpell;
@@ -68,23 +68,25 @@ namespace Com.NikfortGames.MyGame {
 
 
         [Header("Heal Spell")]
-        [Tooltip("No need initialize")]
-        public Image abilityImage3;
         public float coolDown3 = 5;
+        [HideInInspector]
+        public Image abilityImage3;
         public bool isCoolDown3 = false;
-        [Tooltip("No need initialize")]
+        [HideInInspector]
         public KeyCode keyCode3;
         public GameObject vfxHealSpell;
         public float castingTime3;
         public int manaCost3 = 30;
 
         [Header("Teleport Spell")]
-        [Tooltip("No need initialize")]
-        public Image abilityImage4;
         public float coolDown4 = 5;
+        [HideInInspector]
+        public Image abilityImage4;
         public bool isCoolDown4 = false;
-        [Tooltip("No need initialize")]
+        [HideInInspector]
         public KeyCode keyCode4;
+        public GameObject vfxTeleportSpellPrefab;
+        [HideInInspector]
         public GameObject vfxTeleportSpell;
         public float castingTime4 = 0.5f;
         public int manaCost4 = 30;
@@ -111,7 +113,7 @@ namespace Com.NikfortGames.MyGame {
 
         int SPEAR_ATTACK = 1;
         int HEAL_SPELL = 2;
-        // int SHIELD_ATTACK = 3;
+        int TELEPORT_SPELL = 3;
         int STAFF_ATTACK = 4;
 
         #endregion
@@ -262,8 +264,18 @@ namespace Com.NikfortGames.MyGame {
                 if(player.currentMana >= manaCost4) {
                     isCasting = true;
                     animator.SetBool("isCasting", isCasting);
-                    currentSpell = TeleportSpell();
+                    Vector3 teleportTo;
+                    RaycastHit hit;
+                    if (Physics.Raycast(firepoint.transform.position, transform.forward, out hit, distanceToTeleport))
+                    {
+                        teleportTo = new Vector3(hit.point.x, hit.point.y, hit.point.z); 
+                    }
+                    else {
+                        teleportTo = transform.forward * distanceToTeleport; 
+                    }
+                    currentSpell = TeleportSpell(teleportTo);
                     StartCoroutine(currentSpell);
+                    vfxTeleportSpell = Instantiate(vfxTeleportSpellPrefab, thirdPersonMovement.cameraLookHere.position, transform.rotation);
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
@@ -276,6 +288,10 @@ namespace Com.NikfortGames.MyGame {
         void VFXSpellCheck() {
             vfxHealSpell.SetActive(attackNumber == HEAL_SPELL);
             vfxSpearSpellPrepare.SetActive(attackNumber == SPEAR_ATTACK);
+            // if(attackNumber == TELEPORT_SPELL) {
+
+            // }
+            
         }
 
         /// <summary>
@@ -325,7 +341,7 @@ namespace Com.NikfortGames.MyGame {
         /// <summary>
         /// Teleport Spell
         /// </summary>
-        IEnumerator TeleportSpell() {
+        IEnumerator TeleportSpell(Vector3 _teleportTo) {
             SpellProgressIntantiate(castingTime4);
             yield return new WaitForSeconds(castingTime4);
             if(!resetCasting) {
@@ -333,13 +349,9 @@ namespace Com.NikfortGames.MyGame {
                     isCoolDown4 = true;
                     abilityImage4.fillAmount = 1;
                     player.SpendMana(manaCost4);
-                    RaycastHit hit;
-                    if (Physics.Raycast(thirdPersonMovement.transform.position, transform.forward, out hit, distanceToTeleport))
+                    if(vfxTeleportSpell != null)
                     {
-                        transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z); 
-                    }
-                    else {
-                        transform.position = transform.forward * distanceToTeleport; 
+                        vfxTeleportSpell.GetComponent<TeleportOrb>().Activate(_teleportTo);
                     }
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("Cooldown is not over");
@@ -424,7 +436,11 @@ namespace Com.NikfortGames.MyGame {
                 animator.SetBool("isCasting", isCasting);
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 0);
-                
+                if(vfxTeleportSpell != null) {
+                    if(vfxTeleportSpell.GetComponent<TeleportOrb>().isActive != true) {
+                        Destroy(vfxTeleportSpell);
+                    }
+                }
                 timeToFire = 0;
                 attackNumber = 0;
                 if(spellProgress != null) {

@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &99573208
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2409,6 +2409,7 @@ MonoBehaviour:
   keyCode2: 0
   attackDamageSpear: 20
   vfxSpearSpell: {fileID: 0}
+  vfxSpearSpellPrepare: {fileID: 0}
   abilityImage3: {fileID: 0}
   coolDown3: 5
   isCoolDown3: 0
@@ -2416,6 +2417,14 @@ MonoBehaviour:
   vfxHealSpell: {fileID: 0}
   castingTime3: 0
   manaCost3: 30
+  abilityImage4: {fileID: 0}
+  coolDown4: 5
+  isCoolDown4: 0
+  keyCode4: 0
+  vfxTeleportSpell: {fileID: 0}
+  castingTime4: 0.5
+  manaCost4: 30
+  distanceToTeleport: 30
 --- !u!114 &1884243389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2838,16 +2847,28 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.83
+      value: 29.6
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.597
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.27
+      value: 37.8
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2855,15 +2876,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5648520716043331790, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2880,6 +2901,14 @@ PrefabInstance:
     - target: {fileID: 5648520716043331792, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
       propertyPath: m_Name
       value: Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648520716043331792, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648520716586940378, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
