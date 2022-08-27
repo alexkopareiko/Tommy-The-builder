@@ -321,7 +321,7 @@ MonoBehaviour:
   staffHitPoint: {fileID: 6455575974764567336}
   isCasting: 0
   spellProgressPrefab: {fileID: 639062733, guid: e576459f212ebeb479e9208fc42940fd, type: 3}
-  coolDown1: 1
+  coolDown1: 0.5
   abilityImage1: {fileID: 0}
   isCoolDown1: 0
   keyCode1: 0
@@ -335,16 +335,18 @@ MonoBehaviour:
   abilityImage2: {fileID: 0}
   isCoolDown2: 0
   keyCode2: 0
-  attackDamageSpear: 20
+  attackDamageSpear: 15
   vfxSpearSpell: {fileID: 5648520716043331792, guid: 17461f7db7b7a8f4784cb0a7ca661fa6, type: 3}
   vfxSpearSpellPrepare: {fileID: 8343953519659716985}
-  coolDown3: 20
+  castingTime2: 1
+  manaCost2: 10
+  coolDown3: 10
   abilityImage3: {fileID: 0}
   isCoolDown3: 0
   keyCode3: 0
   vfxHealSpell: {fileID: 7480141317558174077}
-  castingTime3: 10
-  manaCost3: 30
+  castingTime3: 2
+  manaCost3: 20
   coolDown4: 0.5
   abilityImage4: {fileID: 0}
   isCoolDown4: 0
@@ -352,8 +354,10 @@ MonoBehaviour:
   vfxTeleportSpellPrefab: {fileID: 602529902965989282, guid: a06fc7c66fbc5cb4d9eccad4be0caad1, type: 3}
   vfxTeleportSpell: {fileID: 602529902965989282, guid: a06fc7c66fbc5cb4d9eccad4be0caad1, type: 3}
   castingTime4: 0.25
-  manaCost4: 1
+  manaCost4: 20
   distanceToTeleport: 30
+  teleportTo: {x: 0, y: 0, z: 0}
+  vfxTeleportPlaceSelection: {fileID: 565267086708677029, guid: e37a77e9e54d4a14790ca3d19a523dc9, type: 3}
 --- !u!114 &5126312449433750530
 MonoBehaviour:
   m_ObjectHideFlags: 0

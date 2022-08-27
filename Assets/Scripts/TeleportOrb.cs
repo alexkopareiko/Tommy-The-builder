@@ -36,7 +36,9 @@ namespace Com.NikfortGames.MyGame {
 
         private void OnTriggerEnter(Collider other) {
             if(other.CompareTag("Player")) {
-                StartCoroutine(other.GetComponent<ThirdPersonMovement>().TeleportMe(teleportTo));
+                if(other.GetComponent<Player>().photonView.IsMine) {
+                    StartCoroutine(other.GetComponent<ThirdPersonMovement>().TeleportMe(teleportTo));
+                }
             }
         }
 

@@ -2393,8 +2393,8 @@ MonoBehaviour:
   staffHitPoint: {fileID: 0}
   isCasting: 0
   spellProgressPrefab: {fileID: 0}
-  abilityImage1: {fileID: 0}
   coolDown1: 5
+  abilityImage1: {fileID: 0}
   isCoolDown1: 0
   keyCode1: 0
   attackDamageStaff: 5
@@ -2403,28 +2403,31 @@ MonoBehaviour:
     m_Bits: 0
   staffAttackPointSize: {x: 0, y: 0, z: 0}
   attackStaff: {fileID: 0}
-  abilityImage2: {fileID: 0}
   coolDown2: 1
+  abilityImage2: {fileID: 0}
   isCoolDown2: 0
   keyCode2: 0
   attackDamageSpear: 20
   vfxSpearSpell: {fileID: 0}
   vfxSpearSpellPrepare: {fileID: 0}
-  abilityImage3: {fileID: 0}
   coolDown3: 5
+  abilityImage3: {fileID: 0}
   isCoolDown3: 0
   keyCode3: 0
   vfxHealSpell: {fileID: 0}
   castingTime3: 0
   manaCost3: 30
-  abilityImage4: {fileID: 0}
   coolDown4: 5
+  abilityImage4: {fileID: 0}
   isCoolDown4: 0
   keyCode4: 0
+  vfxTeleportSpellPrefab: {fileID: 0}
   vfxTeleportSpell: {fileID: 0}
   castingTime4: 0.5
   manaCost4: 30
   distanceToTeleport: 30
+  teleportTo: {x: 0, y: 0, z: 0}
+  vfxTeleportPlaceSelection: {fileID: 0}
 --- !u!114 &1884243389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2451,6 +2454,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   cameraLookHere: {fileID: 0}
   photonView: {fileID: 0}
+  disabledMovement: 0
 --- !u!114 &1884243390
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -55,20 +55,23 @@ namespace Com.NikfortGames.MyGame {
 
 
         [Header("Spear Spell")]
-        public float coolDown2 = 5;
+        public float coolDown2 = 3;
         [HideInInspector]
         public Image abilityImage2;
         public bool isCoolDown2 = false;
         [HideInInspector]
         public KeyCode keyCode2;
-        public int attackDamageSpear = 20;
+        public int attackDamageSpear = 30;
         public GameObject vfxSpearSpell;
         public GameObject vfxSpearSpellPrepare;
+        public float castingTime2 = 2f;
+        public int manaCost2 = 30;
+
 
 
 
         [Header("Heal Spell")]
-        public float coolDown3 = 5;
+        public float coolDown3 = 3;
         [HideInInspector]
         public Image abilityImage3;
         public bool isCoolDown3 = false;
@@ -77,6 +80,7 @@ namespace Com.NikfortGames.MyGame {
         public GameObject vfxHealSpell;
         public float castingTime3;
         public int manaCost3 = 30;
+
 
         [Header("Teleport Spell")]
         public float coolDown4 = 5;
@@ -91,6 +95,8 @@ namespace Com.NikfortGames.MyGame {
         public float castingTime4 = 0.5f;
         public int manaCost4 = 30;
         public float distanceToTeleport = 30f;
+        public Vector3 teleportTo;
+        public GameObject vfxTeleportPlaceSelection;
 
 
 
@@ -228,8 +234,8 @@ namespace Com.NikfortGames.MyGame {
                     return;
                 }
                 Spell spell = vfxSpearSpell.GetComponent<Spell>();
-                timeToFire = Time.time + spell.castingTime;
-                if(player.currentMana >= spell.manaCost) {
+                timeToFire = Time.time + castingTime2;
+                if(player.currentMana >= manaCost2) {
                     animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 1);
                     attackNumber = SPEAR_ATTACK;
                     animator.SetInteger("attack_num", attackNumber);
@@ -262,20 +268,24 @@ namespace Com.NikfortGames.MyGame {
             /// </summary>
             if(Input.GetKeyDown(keyCode4) && notMoving && ableToAttack && !isCoolDown4) {
                 if(player.currentMana >= manaCost4) {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 1);
+                    attackNumber = TELEPORT_SPELL;
+                    animator.SetInteger("attack_num", attackNumber);
                     isCasting = true;
                     animator.SetBool("isCasting", isCasting);
-                    Vector3 teleportTo;
                     RaycastHit hit;
                     if (Physics.Raycast(firepoint.transform.position, transform.forward, out hit, distanceToTeleport))
                     {
                         teleportTo = new Vector3(hit.point.x, hit.point.y, hit.point.z); 
                     }
                     else {
-                        teleportTo = transform.forward * distanceToTeleport; 
+                        teleportTo = transform.position + transform.forward * distanceToTeleport;
                     }
-                    currentSpell = TeleportSpell(teleportTo);
-                    StartCoroutine(currentSpell);
-                    vfxTeleportSpell = Instantiate(vfxTeleportSpellPrefab, thirdPersonMovement.cameraLookHere.position, transform.rotation);
+                    photonView.RPC("TeleportSpellRPC", RpcTarget.AllViaServer, teleportTo);
+                    if(vfxTeleportPlaceSelection != null) {
+                        GameObject _vfxTPS = Instantiate(vfxTeleportPlaceSelection, teleportTo, vfxTeleportPlaceSelection.transform.rotation);
+                        Destroy(_vfxTPS, 0.2f);
+                    }
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("Not enough mana.");
                 }
@@ -285,11 +295,13 @@ namespace Com.NikfortGames.MyGame {
             }
         }
 
+
+
         void VFXSpellCheck() {
             vfxHealSpell.SetActive(attackNumber == HEAL_SPELL);
             vfxSpearSpellPrepare.SetActive(attackNumber == SPEAR_ATTACK);
-            // if(attackNumber == TELEPORT_SPELL) {
-
+            // if(attackNumber == TELEPORT_SPELL && teleportTo != null) {
+                
             // }
             
         }
@@ -298,15 +310,15 @@ namespace Com.NikfortGames.MyGame {
         /// Spear Spell Attack
         /// </summary>
         IEnumerator SpearAttack(Spell spell) {
-            SpellProgressIntantiate(spell.castingTime);
-            yield return new WaitForSeconds(spell.castingTime);
+            SpellProgressIntantiate(castingTime2);
+            yield return new WaitForSeconds(castingTime2);
             if(firepoint != null && !resetCasting) {
                 Player target = GetComponent<Focus>().focus;
                 if(IsAbleToAttack(target) != Vector3.zero && !isCoolDown2 ) {
                     isCoolDown2 = true;
                     abilityImage2.fillAmount = 1;
                     transform.forward = IsAbleToAttack(target);
-                    player.SpendMana(spell.manaCost);
+                    player.SpendMana(manaCost2);
                     photonView.RPC("ThrowSpearSpell", RpcTarget.AllViaServer);
                 } else {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.\nOut of angle range.");
@@ -339,6 +351,16 @@ namespace Com.NikfortGames.MyGame {
         }
 
         /// <summary>
+        /// Photon RPC Teleport Spell
+        /// </summary>
+        [PunRPC]
+        void TeleportSpellRPC(Vector3 _teleportTo){ 
+            currentSpell = TeleportSpell(_teleportTo);
+            StartCoroutine(currentSpell);
+            vfxTeleportSpell = Instantiate(vfxTeleportSpellPrefab, thirdPersonMovement.cameraLookHere.position, transform.rotation);
+        }
+
+        /// <summary>
         /// Teleport Spell
         /// </summary>
         IEnumerator TeleportSpell(Vector3 _teleportTo) {
@@ -346,9 +368,11 @@ namespace Com.NikfortGames.MyGame {
             yield return new WaitForSeconds(castingTime4);
             if(!resetCasting) {
                 if(!isCoolDown4 ) {
-                    isCoolDown4 = true;
-                    abilityImage4.fillAmount = 1;
-                    player.SpendMana(manaCost4);
+                    if(photonView.IsMine) {
+                        isCoolDown4 = true;
+                        abilityImage4.fillAmount = 1;
+                        player.SpendMana(manaCost4);
+                    }
                     if(vfxTeleportSpell != null)
                     {
                         vfxTeleportSpell.GetComponent<TeleportOrb>().Activate(_teleportTo);
@@ -361,6 +385,8 @@ namespace Com.NikfortGames.MyGame {
                 Debug.Log("No Fire Point for Spear Attack");
             }
         }
+
+
 
 
         /// <summary>

@@ -58,7 +58,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.33507842, y: 3.9999995, z: 3.8743186, w: 0}
+      - m_Value: {x: 0, y: 766.9961, z: 742.902, w: 0}
         m_Name: Color
         m_Overridden: 1
     m_Uint:
@@ -141,4 +141,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTo: {x: 0, y: 0, z: 0}
-  timeToDestroy: 1
+  timeToDestroy: 0.5
