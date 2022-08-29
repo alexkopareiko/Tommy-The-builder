@@ -116,6 +116,7 @@ namespace Com.NikfortGames.MyGame {
         private BoxCollider staffHitPointCollider;
         private bool resetCasting;
         private SpellProgress spellProgress;
+        private float minMovementDistance = 0.00001f;
 
         int SPEAR_ATTACK = 1;
         int HEAL_SPELL = 2;
@@ -136,6 +137,8 @@ namespace Com.NikfortGames.MyGame {
             staffHitPointCollider = staffHitPoint.GetComponent<BoxCollider>();
             staffHitPointCollider.size = staffAttackPointSize;
             staffHitPointCollider.enabled = false;
+
+            
         }
 
         private void Update() {
@@ -206,15 +209,13 @@ namespace Com.NikfortGames.MyGame {
         {
             if(player.currentHealth <= 0) return; 
             animator.SetInteger("attack_num", attackNumber);
-            notMoving = controller.velocity.magnitude == 0 && thirdPersonMovement.groundedPlayer;
-            // ableToAttack = Time.time >= timeToFire && !isCasting;
+            notMoving = controller.velocity.magnitude <= minMovementDistance && thirdPersonMovement.groundedPlayer;
             ableToAttack = !isCasting;
             animator.SetBool("able_to_attack", ableToAttack);
             /// <summary>
             /// Staff Kick
             /// </summary>
             if(Input.GetKeyDown(keyCode1) && ableToAttack && !isCoolDown1) {
-                Debug.Log("Hit with staff");
                 Player _target = GetComponent<Focus>().focus;
                 if(_target == null) {
                     GetComponent<InstantiateUI>().ShowMessage("No target selected.");
@@ -301,10 +302,6 @@ namespace Com.NikfortGames.MyGame {
         void VFXSpellCheck() {
             vfxHealSpell.SetActive(attackNumber == HEAL_SPELL);
             vfxSpearSpellPrepare.SetActive(attackNumber == SPEAR_ATTACK);
-            // if(attackNumber == TELEPORT_SPELL && teleportTo != null) {
-                
-            // }
-            
         }
 
         /// <summary>
