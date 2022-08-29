@@ -161,6 +161,7 @@ namespace Com.NikfortGames.MyGame {
         /// </summary>
 
         void SpellProgressIntantiate(float time) {
+            if(!photonView.IsMine) return;
             spellProgress = Instantiate(spellProgressPrefab);
             spellProgress.slider.maxValue = time;
         }
