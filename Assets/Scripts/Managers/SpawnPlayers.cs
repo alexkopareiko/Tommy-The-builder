@@ -6,22 +6,30 @@ using Photon.Pun;
 namespace Com.NikfortGames.MyGame {
     public class SpawnPlayers : MonoBehaviour
     {
+
+        public static SpawnPlayers instance;
+
         #region  Public Fields
 
         public GameObject playerPrefab;
-        public static float minX;
-        public static float maxX;
-        public static float minZ;
-        public static float maxZ;
-        public static float y;
+        public  float minX;
+        public  float maxX;
+        public  float minZ;
+        public  float maxZ;
+        public  float y;
 
-        public static float delayAfterDeath = 3f;
+        public float delayAfterDeath = 3f;
         
         #endregion
 
 
 
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            instance = this;
+        }
 
         private void Start() {
             PhotonNetwork.Instantiate(playerPrefab.name, GetSpawnPosition(), Quaternion.identity);
@@ -31,12 +39,12 @@ namespace Com.NikfortGames.MyGame {
 
         #region Public Methods
 
-        public static Vector3 GetSpawnPosition(){
+        public Vector3 GetSpawnPosition(){
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
             return randomPosition;
         }
 
-        public static IEnumerator RespawnMe(Player player) {
+        public IEnumerator RespawnMe(Player player) {
             yield return new WaitForSeconds(delayAfterDeath);
             player.currentHealth = player.maxHealth;
             player.currentMana = player.maxMana;

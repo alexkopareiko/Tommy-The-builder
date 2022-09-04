@@ -138,7 +138,7 @@ namespace Com.NikfortGames.MyGame {
         void Die() {
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
             animator.SetBool("isDead", true);
-            StartCoroutine(SpawnPlayers.RespawnMe(this));
+            StartCoroutine(SpawnPlayers.instance.RespawnMe(this));
         }
 
         void CheckIfDeadAndReAssign(){
