@@ -66,8 +66,8 @@ namespace Com.NikfortGames.MyGame {
 
         #region Private Methods
         void Move() {
-            groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-            // groundedPlayer = controller.isGrounded;
+            // groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            groundedPlayer = controller.isGrounded;
             animator.SetBool("grounded", groundedPlayer);
             if(groundedPlayer && playerVelocity.y < 0) {
                 animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 0);
