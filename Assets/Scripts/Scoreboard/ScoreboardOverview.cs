@@ -7,11 +7,32 @@ using Utilities;
 
 public class ScoreboardOverview : MonoBehaviourPunCallbacks
 {
+	#region Private Fields
+
 	[SerializeField] private ScoreboardEntry m_entry = null;
 	private List<ScoreboardEntry> m_entries = new List<ScoreboardEntry>();
 
+	private CanvasGroup canvasGroup;
 
-#region Callbacks
+	#endregion
+	
+
+
+
+#region MonBehaviour Callbacks
+
+	private void Start() {
+		canvasGroup = GetComponent<CanvasGroup>();
+	}
+
+	private void Update() {
+		ToggleScoreboard();
+	}
+
+#endregion
+
+
+#region Photon Callbacks
 
 	//creates and entry for local player and udpates the board
 	public override void OnJoinedRoom()
@@ -46,7 +67,10 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 
 #endregion
 
-	private ScoreboardEntry CreateNewEntry(Player newPlayer)
+
+#region Private Methods
+
+private ScoreboardEntry CreateNewEntry(Player newPlayer)
 	{
 		var newEntry = Instantiate(m_entry, transform, false);
 		newEntry.Set(newPlayer);
@@ -91,4 +115,15 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 		m_entries.Remove(targetEntry);
 		Destroy(targetEntry.gameObject);
 	}
+
+	private void ToggleScoreboard(){
+		if(Input.GetKeyDown(KeyCode.Tab)){
+			canvasGroup.alpha = 1;
+		} else if(Input.GetKeyUp(KeyCode.Tab)){
+			canvasGroup.alpha = 0;
+		}
+	}
+
+#endregion
+	
 }
