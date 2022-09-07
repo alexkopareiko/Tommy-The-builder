@@ -16,6 +16,9 @@ namespace Com.NikfortGames.MyGame {
         public  Vector3 circleSelectVector3 = new Vector3(0f, -1.2f, 0f);
         public  CharacterSelection circleSelectPrefab;
 
+        [Header("UI")]
+        public ScoreboardOverview scoreboardOverview;
+
         #endregion
         
         #region Private Fields
@@ -38,6 +41,10 @@ namespace Com.NikfortGames.MyGame {
             player = FindObjectOfType<Player>();
         }
 
+        private void Update() {
+            ToggleScoreboard();
+        }
+
         #endregion
 
         #region Public Methods
@@ -56,6 +63,18 @@ namespace Com.NikfortGames.MyGame {
                 circleSelect.transform.position = pos;
             } else if(circleSelect != null){
                 circleSelect.gameObject.SetActive(false);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void ToggleScoreboard(){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                scoreboardOverview.GetComponent<CanvasGroup>().alpha = 1;
+            } else if(Input.GetKeyUp(KeyCode.Tab)){
+                scoreboardOverview.GetComponent<CanvasGroup>().alpha = 0;
             }
         }
 
