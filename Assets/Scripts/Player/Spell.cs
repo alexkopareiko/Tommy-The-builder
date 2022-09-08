@@ -51,10 +51,8 @@ namespace Com.NikfortGames.MyGame {
         }
 
         private void OnTriggerEnter(Collider other) {
-            // if(hitPrefab != null) {
-            //     GameObject hitVFX = Instantiate(hitPrefab, transform.position, transform.rotation); 
-            // }
-            Destroy(gameObject, 0.5f);
+            if(other.CompareTag("Player"))
+                Destroy(gameObject, 0.5f);
         }
 
         #endregion

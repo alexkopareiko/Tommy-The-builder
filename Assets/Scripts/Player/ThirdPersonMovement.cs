@@ -20,9 +20,9 @@ namespace Com.NikfortGames.MyGame {
         public Transform groundCheck;
         public float groundDistance = 0.4f;
         public LayerMask groundMask;
-        public CharacterController controller;
+        [HideInInspector] public CharacterController controller;
         public Transform cameraLookHere;
-        public PhotonView photonView;
+        [HideInInspector] public PhotonView photonView;
 
         public bool disabledMovement = false;
 
