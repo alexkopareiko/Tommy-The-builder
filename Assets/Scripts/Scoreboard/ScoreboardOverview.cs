@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using Utilities;
+using UnityEngine.UI;
 
 public class ScoreboardOverview : MonoBehaviourPunCallbacks
 {
@@ -23,6 +24,9 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 
 	private void Start() {
 		canvasGroup = GetComponent<CanvasGroup>();
+		canvasGroup.alpha = 0;
+		canvasGroup.blocksRaycasts = false;
+		canvasGroup.interactable = false;
 	}
 
 	private void Update() {
@@ -73,6 +77,7 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 private ScoreboardEntry CreateNewEntry(Player newPlayer)
 	{
 		var newEntry = Instantiate(m_entry, transform, false);
+		newEntry.transform.parent = GetComponentInChildren<VerticalLayoutGroup>().transform;
 		newEntry.Set(newPlayer);
 		m_entries.Add(newEntry);
 		return newEntry;
@@ -119,8 +124,13 @@ private ScoreboardEntry CreateNewEntry(Player newPlayer)
 	private void ToggleScoreboard(){
 		if(Input.GetKeyDown(KeyCode.Tab)){
 			canvasGroup.alpha = 1;
+			canvasGroup.blocksRaycasts = true;
+			canvasGroup.interactable = true;
+
 		} else if(Input.GetKeyUp(KeyCode.Tab)){
 			canvasGroup.alpha = 0;
+			canvasGroup.blocksRaycasts = false;
+			canvasGroup.interactable = false;
 		}
 	}
 
