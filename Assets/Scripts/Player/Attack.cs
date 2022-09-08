@@ -426,6 +426,7 @@ namespace Com.NikfortGames.MyGame {
                     }
                 }
             }
+            projectile.owner = player;
         }
 
         /// <summary>

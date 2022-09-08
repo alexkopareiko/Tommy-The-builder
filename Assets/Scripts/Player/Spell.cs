@@ -19,6 +19,7 @@ namespace Com.NikfortGames.MyGame {
         public GameObject muzzlePrefab;
         public GameObject hitPrefab;
         public Player target;
+        public Player owner;
 
         #endregion
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 
 using Photon.Pun;
@@ -53,6 +54,8 @@ namespace Com.NikfortGames.MyGame {
         #region Private Fields
         private Animator animator;
 
+        private int whoAttackedMe;
+
         protected float timer;
 
         [SerializeField] private AnimationClip getDamageAC;
@@ -90,6 +93,7 @@ namespace Com.NikfortGames.MyGame {
                 TakeDamage(damage);
                 PlayerHitAnimation(other.transform.forward);
             } else if(other.CompareTag("SpearSpell")) {
+                whoAttackedMe = other.GetComponent<Spell>().owner.ownerId;
                 int damage = GetComponent<Attack>().attackDamageSpear;
                 TakeDamage(damage);
                 PlayerHitAnimation(other.transform.forward);
@@ -139,6 +143,7 @@ namespace Com.NikfortGames.MyGame {
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
             animator.SetBool("isDead", true);
             StartCoroutine(SpawnPlayers.instance.RespawnMe(this));
+            PhotonNetwork.CurrentRoom.GetPlayer(whoAttackedMe).AddScore(1);
         }
 
         void CheckIfDeadAndReAssign(){
