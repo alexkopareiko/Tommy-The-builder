@@ -16,7 +16,7 @@ namespace Com.NikfortGames.MyGame{
         #region MonoBehaviour Callbacks
 
         private void Awake() {
-                transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+                transform.SetParent(GameManager.instance.mainCanvas, false);
                 Destroy(gameObject, timeToDestroy);
             }
 

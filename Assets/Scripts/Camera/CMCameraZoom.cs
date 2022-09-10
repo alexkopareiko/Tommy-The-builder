@@ -25,6 +25,7 @@ namespace Com.NikfortGames.MyGame
         }
 
         private void Update() {
+            if(GameManager.instance.gameIsPaused) return;
             if(cinemachineFreeLook && Input.GetAxis("Mouse ScrollWheel") != 0) {
                 cameraDistance = Input.GetAxis("Mouse ScrollWheel") * sensitivity;
                 cinemachineFreeLook.m_CommonLens = true;

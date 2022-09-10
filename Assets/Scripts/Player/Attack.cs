@@ -462,8 +462,9 @@ namespace Com.NikfortGames.MyGame {
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Full_Body"), 0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Attack_Torso"), 0);
                 if(vfxTeleportSpell != null) {
-                    if(vfxTeleportSpell.GetComponent<TeleportOrb>().isActive != true) {
-                        Destroy(vfxTeleportSpell);
+                    TeleportOrb tO = vfxTeleportSpell.GetComponent<TeleportOrb>();
+                    if(tO.isActive != true) {
+                        tO.DestroyMe();
                     }
                 }
                 timeToFire = 0;

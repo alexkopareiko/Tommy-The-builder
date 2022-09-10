@@ -58,6 +58,10 @@ namespace Com.NikfortGames.MyGame {
             }
         }
 
+        public void DestroyMe(){
+            Destroy(gameObject);
+        }
+
         #endregion
         
     }

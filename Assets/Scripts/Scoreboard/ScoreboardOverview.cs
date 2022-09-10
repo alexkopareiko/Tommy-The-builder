@@ -10,6 +10,8 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 {
 	#region Private Fields
 
+	private static ScoreboardOverview instance;
+
 	[SerializeField] private ScoreboardEntry m_entry = null;
 	private List<ScoreboardEntry> m_entries = new List<ScoreboardEntry>();
 
@@ -20,7 +22,15 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 
 
 
-#region MonBehaviour Callbacks
+	#region MonBehaviour Callbacks
+
+	private void Awake() {
+		if (instance == null) {
+        	instance = this;
+		} else {
+			Destroy(gameObject.transform.parent.gameObject);
+		}
+	}
 
 	private void Start() {
 		canvasGroup = GetComponent<CanvasGroup>();

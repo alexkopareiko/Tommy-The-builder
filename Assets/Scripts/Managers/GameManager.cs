@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
+using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
+
 namespace Com.NikfortGames.MyGame {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviourPunCallbacks
     {
 
         #region Public Fields
@@ -15,6 +19,12 @@ namespace Com.NikfortGames.MyGame {
         [SerializeField] 
         public  Vector3 circleSelectVector3 = new Vector3(0f, -1.2f, 0f);
         public  CharacterSelection circleSelectPrefab;
+
+        [Header("Others")]
+        [Tooltip("Menu when pressed ESC")]
+        public GameObject canvasMenu;
+        public bool gameIsPaused = false;
+        public Transform mainCanvas;
 
         #endregion
         
@@ -31,6 +41,7 @@ namespace Com.NikfortGames.MyGame {
         private void Awake()
         {
             instance = this;
+            canvasMenu.SetActive(false);
         }
 
         void Start()
@@ -38,9 +49,48 @@ namespace Com.NikfortGames.MyGame {
             player = FindObjectOfType<Player>();
         }
 
+        private void Update() {
+            if(Input.GetKeyDown(KeyCode.Escape)) {
+                TriggerMenu();
+            }
+        }
+
         #endregion
 
+        #region Pun Callbacks
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Launcher");
+        }
+
+        public override void OnLeftRoom()
+        {
+            PhotonNetwork.Disconnect();
+        }
+
+        #endregion
+        
         #region Public Methods
+
+        public void EndGame() {
+            PhotonNetwork.LeaveRoom();
+        }
+
+
+
+        public void TriggerMenu(){
+            
+            gameIsPaused = !gameIsPaused;
+            if(gameIsPaused)
+            {
+                canvasMenu.SetActive(true);
+            }
+            else 
+            {
+                canvasMenu.SetActive(false);
+            }
+        }
 
         public void SetCircleSelection(Player focus) {
             if(focus) {

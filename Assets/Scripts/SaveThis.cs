@@ -8,6 +8,10 @@ namespace Com.NikfortGames.MyGame {
     {
         #region MonoBehaviour Callbacks
 
+        ///<summary>
+        /// make sure you destroy duplicates
+        /// look ScoreboardOverview.cs for exmaple
+        ///<summary>
         private void Start() {
             DontDestroyOnLoad(gameObject);
         }

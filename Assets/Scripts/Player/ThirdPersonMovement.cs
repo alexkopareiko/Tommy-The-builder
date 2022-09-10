@@ -65,6 +65,21 @@ namespace Com.NikfortGames.MyGame {
 
 
         #region Private Methods
+
+        float HorizontalInput() {
+            if(GameManager.instance.gameIsPaused) return 0f;
+            return Input.GetAxisRaw("Horizontal") * 0.5f;
+        }
+        float VerticalInput() {
+            if(GameManager.instance.gameIsPaused) return 0f;
+            return Input.GetAxisRaw("Vertical");
+        }
+
+        bool JumpInput() {
+            if(GameManager.instance.gameIsPaused) return false;
+            return Input.GetButtonDown("Jump");
+        }
+
         void Move() {
             // groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             groundedPlayer = controller.isGrounded;
@@ -74,8 +89,8 @@ namespace Com.NikfortGames.MyGame {
                 playerVelocity.y = -2f;
             }
 
-            float horizontal = Input.GetAxisRaw("Horizontal") * 0.5f;
-            float vertical = Input.GetAxisRaw("Vertical");
+            float horizontal = HorizontalInput();
+            float vertical = VerticalInput();
 
             vertical = vertical < 0 ? vertical * 0.5f: vertical;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -88,11 +103,11 @@ namespace Com.NikfortGames.MyGame {
                 controller.Move(direction * playerSpeed * Time.deltaTime);
             }
 
-            if(Input.GetMouseButton(1) && Input.GetMouseButton(0)) {
+            if(Input.GetMouseButton(1) && Input.GetMouseButton(0) && !GameManager.instance.gameIsPaused) {
                 transform.forward = new Vector3(cam.forward.x, 0, cam.forward.z);
             }
 
-            if(groundedPlayer && Input.GetButtonDown("Jump")) {
+            if(groundedPlayer && JumpInput()) {
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravityValue);
                 animator.SetLayerWeight(animator.GetLayerIndex("Jump"), 1);
                 animator.SetTrigger("jump");

@@ -89,6 +89,7 @@ namespace Com.NikfortGames.MyGame {
                 return;
             }
             if(other.CompareTag("PlayerStaffHit")) {
+                whoAttackedMe = other.GetComponentInParent<Player>().ownerId;
                 int damage = GetComponent<Attack>().attackDamageStaff;
                 TakeDamage(damage);
                 PlayerHitAnimation(other.transform.forward);
@@ -143,7 +144,10 @@ namespace Com.NikfortGames.MyGame {
             animator.SetLayerWeight(animator.GetLayerIndex("Die"), 1);
             animator.SetBool("isDead", true);
             StartCoroutine(SpawnPlayers.instance.RespawnMe(this));
-            PhotonNetwork.CurrentRoom.GetPlayer(whoAttackedMe).AddScore(1);
+            if(whoAttackedMe != -1) {
+                PhotonNetwork.CurrentRoom.GetPlayer(whoAttackedMe).AddScore(1);
+                whoAttackedMe = -1;
+            }
         }
 
         void CheckIfDeadAndReAssign(){
