@@ -87,7 +87,8 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 private ScoreboardEntry CreateNewEntry(Player newPlayer)
 	{
 		var newEntry = Instantiate(m_entry, transform, false);
-		newEntry.transform.parent = GetComponentInChildren<VerticalLayoutGroup>().transform;
+		Transform parent = GetComponentInChildren<VerticalLayoutGroup>().transform;
+		newEntry.transform.SetParent(parent);
 		newEntry.Set(newPlayer);
 		m_entries.Add(newEntry);
 		return newEntry;

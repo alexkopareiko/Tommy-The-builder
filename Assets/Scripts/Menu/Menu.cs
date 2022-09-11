@@ -6,17 +6,30 @@ using UnityEngine.UI;
 namespace Com.NikfortGames.MyGame {
     public class Menu : MonoBehaviour
     {
+        #region Public Fields
+
+        public static Menu instance;
+        public Slider soundSlider;
+
+        #endregion
         #region Private Fields
-        [SerializeField] int initialDefaultSound = 70;
-        [SerializeField] Slider soundSlider;
+        [SerializeField] float initialDefaultSound = 0.5f;
+        [SerializeField] List<AudioSource> allAudioSources;
 
         #endregion
 
         #region MonoBehaviour Callbacks
 
         private void Awake() {
+            instance = this;
             SoundInitialization();
-            soundSlider.onValueChanged.AddListener (delegate {SetSoundVolume ();});
+            soundSlider.onValueChanged.AddListener (delegate {
+                EventManager.m_onSoundSliderChanged.Invoke();
+            });
+            EventManager.m_onSoundSliderChanged.AddListener(SetSoundVolume);
+        }
+
+        private void Start() {
         }
 
         #endregion
@@ -24,7 +37,11 @@ namespace Com.NikfortGames.MyGame {
         #region Public Methods
 
         public void SetSoundVolume() {
-            PlayerPrefs.SetInt(Constants.PLAYER_PREFS.SOUND, (int)soundSlider.value);
+            PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND, soundSlider.value);
+            foreach (var audioSource in allAudioSources)
+            {
+                audioSource.volume = soundSlider.value;
+            }
         }
 
         #endregion
@@ -33,11 +50,11 @@ namespace Com.NikfortGames.MyGame {
 
         
         void SoundInitialization() {
-            int soundValue = initialDefaultSound;
+            float soundValue = initialDefaultSound;
             if(PlayerPrefs.HasKey(Constants.PLAYER_PREFS.SOUND)) {
-                soundValue = PlayerPrefs.GetInt(Constants.PLAYER_PREFS.SOUND);
+                soundValue = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND);
             } else {
-                PlayerPrefs.SetInt(Constants.PLAYER_PREFS.SOUND, soundValue);
+                PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND, soundValue);
             }
             soundSlider.value = soundValue;
         }
