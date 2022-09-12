@@ -17,6 +17,7 @@ namespace Com.NikfortGames.MyGame {
         [Header("Sound")]
         [SerializeField] GameObject soundMenu;
         [SerializeField] Button soundButton;
+        [SerializeField] Button exitButton;
 
         #endregion
 
@@ -25,6 +26,7 @@ namespace Com.NikfortGames.MyGame {
         private void Awake() {
             instance = this;
             soundButton.onClick.AddListener(TriggerSoundMenu);
+            soundButton.onClick.AddListener(ExitGame);
         }
 
         private void Start() {
@@ -46,6 +48,10 @@ namespace Com.NikfortGames.MyGame {
         void TriggerSoundMenu() {
             soundMenu.TriggerMenu();
             CloseOtherMenus(soundMenu);
+        }
+
+        void ExitGame() {
+            Application.Quit();
         }
         
         #endregion
