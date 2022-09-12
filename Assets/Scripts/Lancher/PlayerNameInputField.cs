@@ -51,6 +51,7 @@ namespace Com.NikfortGames.MyGame
         /// </summary>
         /// <param name="value">The name of the Player</param>
         public void SetPlayerName(string value) {
+            SoundManager.instance.PlayMenuPlayerNameInput();
             // #Important
             if(string.IsNullOrEmpty(value)) {
                 Debug.LogError("Player Name is null or Empty");

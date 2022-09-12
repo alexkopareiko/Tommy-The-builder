@@ -123,6 +123,7 @@ namespace Com.NikfortGames.MyGame {
         public void Connect() {
             progressLabel.SetActive(true);
             controlPanel.SetActive(false);
+            SoundManager.instance.PlayMenuPlayButtonClick();
             // we check if we are connected or not, we join if we are, else we initiate the connection to server
             if(PhotonNetwork.IsConnected) {
                 // #Critical we need at this point to atempt joining a Random Room. 

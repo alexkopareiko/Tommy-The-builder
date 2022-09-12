@@ -9,19 +9,21 @@ namespace Com.NikfortGames.MyGame {
     {
 
         #region Public Fields
-        public static UnityEvent m_onSoundSliderChanged;
-
-        public Slider soundSlider;
+        
+        public static UnityEvent m_onSoundMusicSliderChanged;
+        public static UnityEvent m_onSoundEffectsSliderChanged;
 
         #endregion
 
         #region MonoBehaviour Callbacks
 
         private void Awake() {
-            if (m_onSoundSliderChanged == null)
-                m_onSoundSliderChanged = new UnityEvent();
+            if (m_onSoundMusicSliderChanged == null)
+                m_onSoundMusicSliderChanged = new UnityEvent();
+            if (m_onSoundEffectsSliderChanged == null)
+                m_onSoundEffectsSliderChanged = new UnityEvent();
         }
-        
+
         #endregion
 
 

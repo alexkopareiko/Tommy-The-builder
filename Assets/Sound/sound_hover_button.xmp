@@ -2,15 +2,12 @@
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 6.0-c002 79.164360, 2020/02/13-01:07:22        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
       <rdf:Description rdf:about=""
-            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
             xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/"
+            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
             xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
             xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
             xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
             xmlns:dc="http://purl.org/dc/elements/1.1/">
-         <xmp:CreatorTool>FL Studio 12</xmp:CreatorTool>
-         <xmp:MetadataDate>2022-09-10T17:41:36+03:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2022-09-10T17:41:36+03:00</xmp:ModifyDate>
          <xmpDM:Tracks>
             <rdf:Bag>
                <rdf:li rdf:parseType="Resource">
@@ -30,31 +27,33 @@
                </rdf:li>
             </rdf:Bag>
          </xmpDM:Tracks>
-         <xmpMM:InstanceID>xmp.iid:d5e464a5-9197-4a41-871d-2db1fae9afe8</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:d5e464a5-9197-4a41-871d-2db1fae9afe8</xmpMM:DocumentID>
-         <xmpMM:OriginalDocumentID>xmp.did:3d99db5e-9b7b-d747-b07d-7898e6d13a2d</xmpMM:OriginalDocumentID>
+         <xmp:MetadataDate>2022-09-12T20:27:21+03:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2022-09-12T20:27:21+03:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:af134994-2e12-3643-9091-f10dcc216d78</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:af134994-2e12-3643-9091-f10dcc216d78</xmpMM:DocumentID>
+         <xmpMM:OriginalDocumentID>xmp.did:cf115fb6-86c8-3846-b0c3-3383f66eba8f</xmpMM:OriginalDocumentID>
          <xmpMM:History>
             <rdf:Seq>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3d99db5e-9b7b-d747-b07d-7898e6d13a2d</stEvt:instanceID>
-                  <stEvt:when>2022-09-10T17:41:36+03:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:cf115fb6-86c8-3846-b0c3-3383f66eba8f</stEvt:instanceID>
+                  <stEvt:when>2022-09-12T20:27:21+03:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:d5e464a5-9197-4a41-871d-2db1fae9afe8</stEvt:instanceID>
-                  <stEvt:when>2022-09-10T17:41:36+03:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:af134994-2e12-3643-9091-f10dcc216d78</stEvt:instanceID>
+                  <stEvt:when>2022-09-12T20:27:21+03:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>
             </rdf:Seq>
          </xmpMM:History>
          <xmpMM:DerivedFrom rdf:parseType="Resource">
-            <stRef:instanceID>xmp.iid:3d99db5e-9b7b-d747-b07d-7898e6d13a2d</stRef:instanceID>
-            <stRef:documentID>xmp.did:3d99db5e-9b7b-d747-b07d-7898e6d13a2d</stRef:documentID>
-            <stRef:originalDocumentID>xmp.did:3d99db5e-9b7b-d747-b07d-7898e6d13a2d</stRef:originalDocumentID>
+            <stRef:instanceID>xmp.iid:cf115fb6-86c8-3846-b0c3-3383f66eba8f</stRef:instanceID>
+            <stRef:documentID>xmp.did:cf115fb6-86c8-3846-b0c3-3383f66eba8f</stRef:documentID>
+            <stRef:originalDocumentID>xmp.did:cf115fb6-86c8-3846-b0c3-3383f66eba8f</stRef:originalDocumentID>
          </xmpMM:DerivedFrom>
          <dc:format>audio/ogg; codec="vorbis"</dc:format>
       </rdf:Description>

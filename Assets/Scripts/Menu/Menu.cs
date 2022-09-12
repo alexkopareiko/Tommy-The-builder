@@ -9,12 +9,14 @@ namespace Com.NikfortGames.MyGame {
         #region Public Fields
 
         public static Menu instance;
-        public Slider soundSlider;
 
         #endregion
+
         #region Private Fields
-        [SerializeField] float initialDefaultSound = 0.5f;
-        [SerializeField] List<AudioSource> allAudioSources;
+
+        [Header("Sound")]
+        [SerializeField] GameObject soundMenu;
+        [SerializeField] Button soundButton;
 
         #endregion
 
@@ -22,11 +24,7 @@ namespace Com.NikfortGames.MyGame {
 
         private void Awake() {
             instance = this;
-            SoundInitialization();
-            soundSlider.onValueChanged.AddListener (delegate {
-                EventManager.m_onSoundSliderChanged.Invoke();
-            });
-            EventManager.m_onSoundSliderChanged.AddListener(SetSoundVolume);
+            soundButton.onClick.AddListener(TriggerSoundMenu);
         }
 
         private void Start() {
@@ -36,29 +34,20 @@ namespace Com.NikfortGames.MyGame {
 
         #region Public Methods
 
-        public void SetSoundVolume() {
-            PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND, soundSlider.value);
-            foreach (var audioSource in allAudioSources)
-            {
-                audioSource.volume = soundSlider.value;
-            }
-        }
-
         #endregion
 
         #region Private Methods 
 
-        
-        void SoundInitialization() {
-            float soundValue = initialDefaultSound;
-            if(PlayerPrefs.HasKey(Constants.PLAYER_PREFS.SOUND)) {
-                soundValue = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND);
-            } else {
-                PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND, soundValue);
-            }
-            soundSlider.value = soundValue;
-        }
 
+
+        void CloseOtherMenus(GameObject except) {
+            if(except != soundMenu) soundMenu.CloseMenu();
+        }
+        void TriggerSoundMenu() {
+            soundMenu.TriggerMenu();
+            CloseOtherMenus(soundMenu);
+        }
+        
         #endregion
     }
 }

@@ -9,7 +9,8 @@ namespace Com.NikfortGames.MyGame {
         #region Public Fields
 
         public class PLAYER_PREFS {
-            public const string SOUND = "SOUND";
+            public const string SOUND_MUSIC = "SOUND_MUSIC";
+            public const string SOUND_EFFECTS = "SOUND_EFFECTS";
             
         }
 
