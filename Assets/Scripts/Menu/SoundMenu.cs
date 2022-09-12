@@ -18,7 +18,6 @@ namespace Com.NikfortGames.MyGame {
         
         [SerializeField] Slider soundMusicSlider;
         [SerializeField] Slider soundEffectsSlider;
-        [SerializeField] Button closeButton;
 
 
         #endregion
@@ -27,7 +26,6 @@ namespace Com.NikfortGames.MyGame {
 
         private void Awake() {
             gameObject.CloseMenu();
-            closeButton.onClick.AddListener(gameObject.CloseMenu);
         }
 
         private void Start() {
