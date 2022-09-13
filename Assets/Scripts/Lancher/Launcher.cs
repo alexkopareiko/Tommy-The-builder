@@ -5,10 +5,13 @@ using Photon.Pun;
 using Photon.Realtime;
 
 namespace Com.NikfortGames.MyGame {
-    public class    Launcher : MonoBehaviourPunCallbacks
+    public class Launcher : MonoBehaviourPunCallbacks
     {
 
-        #region Private Serializable Fields
+        #region Public Fields
+
+        public static Launcher instance;
+        public bool error = false;
 
         #endregion
 
@@ -50,6 +53,7 @@ namespace Com.NikfortGames.MyGame {
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase
         /// </summary>
         private void Awake() {
+            instance = this;
             // #Critical
             // this makes sure user PhotonNetwork.LoadLevel() on the master client and all clients on the same room sync their level automaticaly
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -121,6 +125,7 @@ namespace Com.NikfortGames.MyGame {
         /// if not yet connected, Connect this aplicaiton instance to Photon Cloud Network
         /// </summary>
         public void Connect() {
+            if(error) return;
             progressLabel.SetActive(true);
             controlPanel.SetActive(false);
             SoundManager.instance.PlayMenuPlayButtonClick();
@@ -139,6 +144,7 @@ namespace Com.NikfortGames.MyGame {
                 PhotonNetwork.GameVersion = gameVersion;
             }
         }
+
 
         #endregion
 

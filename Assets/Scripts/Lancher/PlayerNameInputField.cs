@@ -6,6 +6,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 
+using System.Text.RegularExpressions;
 namespace Com.NikfortGames.MyGame 
 {
 
@@ -16,6 +17,8 @@ namespace Com.NikfortGames.MyGame
     public class PlayerNameInputField : MonoBehaviour
     {
         #region Private Constants
+
+        [SerializeField] ErrorMessage errorMessage;
 
         // Store the PlayerPref Key to avoid typos
         const string playerNamePrefKey = "Playername";
@@ -52,13 +55,27 @@ namespace Com.NikfortGames.MyGame
         /// <param name="value">The name of the Player</param>
         public void SetPlayerName(string value) {
             SoundManager.instance.PlayMenuPlayerNameInput();
-            // #Important
-            if(string.IsNullOrEmpty(value)) {
-                Debug.LogError("Player Name is null or Empty");
+            string msg = CheckPlayerName(value);
+            errorMessage.SetMessage(msg);
+            if(msg != Constants.MSG.OK) {
+                Launcher.instance.error = true;
+                return;
             }
+            Launcher.instance.error = false;
+            // #Important
             PhotonNetwork.NickName = value;
 
             PlayerPrefs.SetString(playerNamePrefKey, value);
+        }
+
+        public string CheckPlayerName(string name) {
+            if(name.Length < 4 || name.Length > 14) {
+                return Constants.MSG.NICKNAME_LENGTH;
+            }
+            if(Regex.Replace(name, "[^\\w\\._]", "") != name) {
+                return Constants.MSG.NICKNAME_SYMBOLS;
+            }
+            return Constants.MSG.OK;
         }
         #endregion  
         

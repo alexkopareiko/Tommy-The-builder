@@ -14,6 +14,12 @@ namespace Com.NikfortGames.MyGame {
             
         }
 
+        public class MSG {
+            public const string NICKNAME_LENGTH = "name should be 4-14 characters";
+            public const string NICKNAME_SYMBOLS = "name should consist letters/numbers/underscore";
+            public const string OK = "OK";
+        }
+
         #endregion
     }
 
