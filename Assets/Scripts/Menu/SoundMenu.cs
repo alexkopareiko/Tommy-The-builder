@@ -13,8 +13,7 @@ namespace Com.NikfortGames.MyGame {
         #region Private Fields
 
 
-        [SerializeField] float initialMusicVolume = 0.5f;
-        [SerializeField] float initialEffectsVolume = 0.5f;
+        
         
         [SerializeField] Slider soundMusicSlider;
         [SerializeField] Slider soundEffectsSlider;
@@ -29,7 +28,7 @@ namespace Com.NikfortGames.MyGame {
         }
 
         private void Start() {
-            SoundInitialization();
+            Sliderslization();
             SliderAttachListeners();
         }
 
@@ -42,54 +41,22 @@ namespace Com.NikfortGames.MyGame {
 
         #region Private Methods
 
+        void Sliderslization() {
+            soundMusicSlider.value = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND_MUSIC);
+            soundEffectsSlider.value = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND_EFFECTS);
+        }
+
         void SliderAttachListeners() {
             soundMusicSlider.onValueChanged.AddListener (delegate {
-                EventManager.m_onSoundMusicSliderChanged.Invoke();
+                SoundManager.instance.SetMusicVolume(soundMusicSlider.value);
             });
             soundEffectsSlider.onValueChanged.AddListener (delegate {
-                EventManager.m_onSoundEffectsSliderChanged.Invoke();
+                SoundManager.instance.SetEffectsVolume(soundEffectsSlider.value);
             });
-            EventManager.m_onSoundMusicSliderChanged.AddListener(SetMusicVolume);
-            EventManager.m_onSoundEffectsSliderChanged.AddListener(SetEffectsVolume);
         } 
 
         
-        void SoundInitialization() {
-            float _musicVolume = initialMusicVolume;
-            if(PlayerPrefs.HasKey(Constants.PLAYER_PREFS.SOUND_MUSIC)) {
-                _musicVolume = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND_MUSIC);
-            } else {
-                PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND_MUSIC, _musicVolume);
-            }
-            soundMusicSlider.value = _musicVolume;
-
-            float _effectVolume = initialEffectsVolume;
-            if(PlayerPrefs.HasKey(Constants.PLAYER_PREFS.SOUND_EFFECTS)) {
-                _effectVolume = PlayerPrefs.GetFloat(Constants.PLAYER_PREFS.SOUND_EFFECTS);
-            } else {
-                PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND_EFFECTS, _effectVolume);
-            }
-            soundEffectsSlider.value = _effectVolume;
-
-            SetMusicVolume();
-            SetEffectsVolume();
-        }
-
-        void SetMusicVolume() {
-            PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND_MUSIC, soundMusicSlider.value);
-            foreach (var audioSource in SoundManager.instance.allMusicAudioSources)
-            {
-                audioSource.volume = soundMusicSlider.value;
-            }
-        }
-
-        void SetEffectsVolume() {
-            PlayerPrefs.SetFloat(Constants.PLAYER_PREFS.SOUND_EFFECTS, soundEffectsSlider.value);
-            foreach (var audioSource in SoundManager.instance.allEffectsAudioSources)
-            {
-                audioSource.volume = soundEffectsSlider.value;
-            }
-        }
+        
 
         
 
