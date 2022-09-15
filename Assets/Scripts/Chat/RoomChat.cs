@@ -10,9 +10,17 @@ using UnityEngine.UI;
 namespace Com.NikfortGames.MyGame 
 {
 	[RequireComponent(typeof(PhotonView))]
-	public class RoomChat : MonoBehaviourPunCallbacks, IPointerDownHandler
+	public class RoomChat : MonoBehaviourPunCallbacks
 	{
-		[SerializeField] private KeyCode m_sendKey = KeyCode.Return;
+
+		#region Public Fields
+
+		public static RoomChat instance;
+
+		#endregion
+		#region Private Fields
+
+		[SerializeField] private List<KeyCode> m_sendKey;
 		[SerializeField] private Text m_message = null;
 		[SerializeField] private Transform m_content = null;
 		[SerializeField] private InputField m_messageInput = null;
@@ -20,7 +28,9 @@ namespace Com.NikfortGames.MyGame
 		private Queue<string> m_messageQueue = new Queue<string>();
 		private StringBuilder m_messageBuilder = new StringBuilder();
 
-#region Message Limits
+		#endregion
+
+		#region Message Limits
 
 		[Header("Send Limitations")]
 
@@ -34,20 +44,40 @@ namespace Com.NikfortGames.MyGame
 		private bool m_canSend = true;
 		private double m_nextSendingTime;
 
-#endregion
+		#endregion
+
+		#region MonoBehaviour Callbacks
+
+		private void Awake() {
+			instance = this;
+			// m_messageInput.gameObject.CloseMenu();
+		}
 
 		private void Start()
 		{
 			m_messageInput.text = string.Empty;
-			m_messageInput.interactable = false;
+			m_messageInput.readOnly = true;
+
+			
 		}
 
 		private void Update() => PlayerInput();
 
+		#endregion
+		
+		#region Private Fields
+
 		private void PlayerInput()
 		{
-			if (!Input.GetKeyDown(m_sendKey)) return;
-			if (m_messageInput.IsInteractable())
+			bool keyPressed = false;
+			foreach (var item in m_sendKey)
+			{
+				if(Input.GetKeyDown(item)) {
+					keyPressed = true;
+				}
+			}
+			if(!keyPressed) return;
+			if (!m_messageInput.readOnly)
 			{
 				SendAndClose();
 			}
@@ -55,14 +85,6 @@ namespace Com.NikfortGames.MyGame
 			{
 				Open();
 			}
-		}
-
-		private void Open()
-		{
-			m_messageInput.interactable = true;
-
-			//set focus
-			EventSystem.current.SetSelectedGameObject(m_messageInput.gameObject);
 		}
 
 		private void SendAndClose()
@@ -76,9 +98,7 @@ namespace Com.NikfortGames.MyGame
 			//clean input Field
 			m_messageInput.text = string.Empty;
 
-			//deselect the InputField
-			EventSystem.current.SetSelectedGameObject(null);
-			m_messageInput.interactable = false;
+			Close();
 		}
 
 		private void SendMessage()
@@ -174,22 +194,55 @@ namespace Com.NikfortGames.MyGame
 				senderName = "Someone";
 			}
 
-			var localColor = ColorUtility.ToHtmlStringRGB(new Color(0.7f, 0.8f, 0.9f));
-			var otherColor = ColorUtility.ToHtmlStringRGB(new Color(0.2f, 0.8f, 1f));
+			var localColor = ColorUtility.ToHtmlStringRGB(Constants.COLORS.GRAY);
+			var otherColor = ColorUtility.ToHtmlStringRGB(Constants.COLORS.GREEN);
 			var name = Equals(player, PhotonNetwork.LocalPlayer)
 				? $"<color=#{localColor}> [ {senderName} ]</color>"
 				: $"<color=#{otherColor}> [ {senderName} ]</color>";
 			return name;
 		}
 
-		public void OnPointerDown(PointerEventData eventData)
+		#endregion
+
+		#region Public Methods
+
+		public void OnPointerEnter() {
+		}
+
+		public void OnPointerExit() {
+
+		}
+
+		public void OnPointerDown()
 		{
-			Debug.Log("OnPointerDown");
-			if (!m_messageInput.IsInteractable())
-			{
-				Debug.Log("OnPointerDown + 1");
-				Open();
+
+		}
+
+		public void Open()
+		{
+			if(m_messageInput.readOnly) {
+				//set focus
+				m_messageInput.readOnly = false;
+				EventSystem.current.SetSelectedGameObject(m_messageInput.gameObject);
+				m_messageInput.Select();
+				GameManager.instance.gameIsPaused = true;
 			}
 		}
+
+		public void Close() {
+			if(!m_messageInput.readOnly) {
+				var eventSystem = EventSystem.current;
+				if (!eventSystem.alreadySelecting) eventSystem.SetSelectedGameObject (null);
+				// EventSystem.current.SetSelectedGameObject(null);
+				m_messageInput.readOnly = true;
+				GameManager.instance.gameIsPaused = false;
+			}
+			
+		}
+
+
+		#endregion
+
+
 	}
 }

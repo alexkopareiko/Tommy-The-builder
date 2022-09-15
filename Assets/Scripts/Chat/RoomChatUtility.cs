@@ -10,19 +10,19 @@ namespace Com.NikfortGames.MyGame  {
 
 		public override void OnJoinedRoom()
 		{
-			var colorCode = ColorUtility.ToHtmlStringRGB(Color.blue);
+			var colorCode = ColorUtility.ToHtmlStringRGB(Constants.COLORS.PURPLE);
 			m_roomChat.CreateLocalMessage($"<color=#{colorCode}>You joined the Game. </color>");
 		}
 
 		public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 		{
-			var colorCode = ColorUtility.ToHtmlStringRGB(Color.blue);
+			var colorCode = ColorUtility.ToHtmlStringRGB(Constants.COLORS.PURPLE);
 			m_roomChat.CreateLocalMessage($"<color=#{colorCode}>{newPlayer.NickName} joined the Game. </color>");
 		}
 
 		public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
 		{
-			var colorCode = ColorUtility.ToHtmlStringRGB(new Color(1f, 0.5f, 0f));
+			var colorCode = ColorUtility.ToHtmlStringRGB(Constants.COLORS.PURPLE);
 			m_roomChat.CreateLocalMessage($"<color=#{colorCode}>{otherPlayer.NickName} left the Game.</color>");
 		}
 

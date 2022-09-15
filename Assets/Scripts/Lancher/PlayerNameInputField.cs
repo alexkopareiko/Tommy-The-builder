@@ -19,6 +19,7 @@ namespace Com.NikfortGames.MyGame
         #region Private Constants
 
         [SerializeField] ErrorMessage errorMessage;
+        [SerializeField] KeyCode sendKey = KeyCode.Return;
 
         // Store the PlayerPref Key to avoid typos
         const string playerNamePrefKey = "Playername";
@@ -42,6 +43,12 @@ namespace Com.NikfortGames.MyGame
             }
 
             PhotonNetwork.NickName = defaultName;
+        }
+
+        private void Update() {
+            if(Input.GetKeyDown(sendKey)) {
+                Launcher.instance.Connect();
+            }
         }
 
 
