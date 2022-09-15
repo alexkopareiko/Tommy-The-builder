@@ -5,6 +5,8 @@ using Photon.Realtime;
 using UnityEngine;
 using Utilities;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class ScoreboardOverview : MonoBehaviourPunCallbacks
 {
@@ -133,6 +135,8 @@ private ScoreboardEntry CreateNewEntry(Player newPlayer)
 	}
 
 	private void ToggleScoreboard(){
+		Scene scene = SceneManager.GetActiveScene();
+		if(scene.buildIndex == 0) return;
 		if(Input.GetKeyDown(KeyCode.Tab)){
 			canvasGroup.alpha = 1;
 			canvasGroup.blocksRaycasts = true;

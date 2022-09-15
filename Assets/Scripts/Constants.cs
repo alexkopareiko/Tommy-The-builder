@@ -21,7 +21,7 @@ namespace Com.NikfortGames.MyGame {
         }
 
         public class COLORS {
-            public static Color PURPLE = new Color(0.7843138f, 0.9960785f, 0.1843137f);
+            public static Color PURPLE = new Color(0.7529413f, 0.509804f, 0.9960785f);
             public static Color GREEN = new Color(0.7411765f, 0.5019608f, 0.9921569f);
             public static Color GRAY = new Color(0.7f, 0.8f, 0.9f);
 
